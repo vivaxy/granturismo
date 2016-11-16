@@ -18,6 +18,8 @@ make sure you have submitted your changes
 
 `gt`
 
+`gt help`
+
 `gt init`
 
 `gt config add scaffold-name git-repo`
