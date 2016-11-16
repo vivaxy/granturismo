@@ -54,6 +54,7 @@ const remove = (scaffoldName) => {
     editConfig((userConfig) => {
         const newConfig = Object.assign({}, userConfig);
         delete newConfig.scaffold[scaffoldName];
+        fse.removeSync(path.join(GTHome, scaffoldName));
         return newConfig;
     });
 };
