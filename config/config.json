@@ -1,6 +1,6 @@
 {
     "scaffold": {
-        "react-redux-client": {
+        "vivaxy/react-scaffold": {
             "repo": "https://github.com/vivaxy/react-scaffold.git",
             "stat": 0
         }
