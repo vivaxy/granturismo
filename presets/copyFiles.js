@@ -24,7 +24,7 @@ export default (options) => {
         // console.log(`copying ${sourceFolder} into ${distFolder}...`);
         // copy all files
         files.forEach((file) => {
-            console.log(`copying ${file}...`);
+            // console.log(`copying ${file}...`);
             fse.copySync(path.join(sourceFolder, file), path.join(distFolder, file));
         });
     };
