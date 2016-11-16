@@ -1,6 +1,8 @@
 # GRANTURISMO
 
-GT
+[![NPM Version][npm-version-image]][npm-url]
+[![NPM Downloads][npm-downloads-image]][npm-url]
+[![MIT License][license-image]][license-url]
 
 generator tool
 
@@ -128,3 +130,9 @@ make sure you have submitted your changes
 - https://github.com/shelljs/shelljs
 - https://github.com/yargs/yargs
 - https://github.com/isaacs/minimatch
+
+[npm-version-image]: http://img.shields.io/npm/v/granturismo.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/granturismo
+[npm-downloads-image]: https://img.shields.io/npm/dt/granturismo.svg?style=flat-square
+[license-image]: https://img.shields.io/npm/l/granturismo.svg?style=flat-square
+[license-url]: LICENSE
