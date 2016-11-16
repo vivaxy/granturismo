@@ -59,9 +59,9 @@ ${clone.stderr}`);
     }
 
     sh.cd(selectedScaffoldFolder);
-    console.log(`git pull`);
+    console.log(`git pull...`);
     sh.exec(`git pull`);
-    console.log(`npm install`);
+    console.log(`npm install...`);
     sh.exec(`npm install`);
     sh.cd(cwd);
 
