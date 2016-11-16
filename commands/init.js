@@ -101,7 +101,7 @@ ${clone.stderr}`);
                 updateJson: getUpdateJson(GTInfo),
             };
 
-            projectGT.init(GTInfo);
+            await projectGT.init(GTInfo);
 
             updateScaffoldStat(selectedScaffoldName);
 
