@@ -1,14 +1,10 @@
 # GRANTURISMO
 
+GT
+
 generator tool
 
-## PUBLISH
-
-make sure you have submitted your changes
-
-`npm version patch`
-
-`npm publish --registry="https://registry.npmjs.org/"`
+workflow tool for scaffolding projects
 
 ## INSTALLATION
 
@@ -26,9 +22,9 @@ make sure you have submitted your changes
 
 `gt config remove scaffold-name`
 
-## HOT TO SCAFFOLD USING GT?
+## WHO TO SCAFFOLD USING GT?
 
-Implement `gt.js`, adding project info into user config.
+Implement `scripts/gt.js`, adding project info into user config.
 
 See [react-scaffold](https://github.com/vivaxy/react-scaffold) as example.
 
@@ -109,6 +105,14 @@ Same as `writeFile`, but passing json object into second parameter
 `filter{Function}` `filter({Object}) => {Object}`
 
 Same as `updateFile`, but passing json object into `filter`
+
+## PUBLISH
+
+make sure you have submitted your changes
+
+`npm version patch`
+
+`npm publish --registry="https://registry.npmjs.org/"`
 
 ## ENCOUNTERED PROBLEMS
 
