@@ -1,0 +1,5 @@
+{
+    "scaffold": {
+        "react-redux-client": "https://github.com/vivaxy/react-scaffold.git"
+    }
+}
