@@ -25,16 +25,14 @@ export default async() => {
     ensureConfig();
 
     const userConfig = require(path.join(GTHome, `config.json`));
-    const scaffoldList = userConfig.scaffold;
-    const scaffoldNameList = scaffoldList.map((scaffold, index) => {
-        return scaffold.name;
-    });
+    const scaffoldConfig = userConfig.scaffold;
+    const scaffoldNameList = Object.keys(scaffoldConfig);
 
     const answer = await inquirer.prompt([
         {
-            type: 'list',
-            name: 'type',
-            message: 'choose what you need',
+            type: `list`,
+            name: `scaffold`,
+            message: `choose scaffold...`,
             choices: scaffoldNameList,
             filter: function(val) {
                 return val.toLowerCase();
@@ -42,31 +40,27 @@ export default async() => {
         }
     ]);
 
-    const answerName = answer.type;
-
-    console.log(`[you choose] ${answerName}`);
-
-    const selectedScaffold = scaffoldList.find((item, index) => {
-        return item.name === answerName;
-    });
-
-    const selectedScaffoldName = selectedScaffold.name;
+    const selectedScaffoldName = answer.scaffold;
+    const selectedScaffoldNameRepoURL = scaffoldConfig[selectedScaffoldName];
     const selectedScaffoldFolder = path.join(GTHome, selectedScaffoldName);
 
+    console.log(`using scaffold: ${selectedScaffoldName}`);
+
     if (!sh.test(`-d`, selectedScaffoldFolder)) {
-        const clone = sh.exec(`git clone ${selectedScaffold.repoUrl} ${selectedScaffoldFolder}`);
+        console.log(`cloning: selectedScaffoldNameRepoURL`);
+        const clone = sh.exec(`git clone ${selectedScaffoldNameRepoURL} ${selectedScaffoldFolder}`);
         if (clone.code !== 0) {
-            console.log(`[clone error] ${selectedScaffold.repoUrl}`);
+            console.log(`clone error: ${selectedScaffoldNameRepoURL}
+${clone.stderr}`);
             sh.exit(1);
         }
-        console.log('[clone done]');
     }
 
     sh.cd(selectedScaffoldFolder);
+    console.log(`git pull`);
     sh.exec(`git pull`);
-    console.log(`[pull done]`);
+    console.log(`npm install`);
     sh.exec(`npm install`);
-    console.log(`[install done]`);
     sh.cd(cwd);
 
     const projectGTFilePath = path.join(GTHome, selectedScaffoldName, projectGTFile);
@@ -107,7 +101,7 @@ export default async() => {
         projectGT.init(GTInfo);
     } catch (ex) {
         console.log(ex);
-        console.log(`[warning] no scripts found.`);
+        console.log(`no gt script found in ${selectedScaffoldName}`);
     }
 
 }

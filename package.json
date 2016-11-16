@@ -2,8 +2,9 @@
   "name": "granturismo",
   "version": "0.0.0",
   "description": "generator tool",
-  "main": "index.js",
-  "scripts": {},
+  "bin": {
+    "gt": "./index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vivaxy/granturismo.git"
