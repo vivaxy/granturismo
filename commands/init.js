@@ -7,9 +7,8 @@ import path from 'path';
 import sh from 'shelljs';
 import inquirer from 'inquirer';
 
-import ensureConfig from '../lib/ensureConfig';
 import updateScaffoldStat from '../lib/updateScaffoldStat';
-import { GTHome } from '../config';
+import { GTHome, CONFIG_FILE_NAME } from '../config';
 
 import getCopyFiles from '../presets/copyFiles';
 import getWriteFile from '../presets/writeFile';
@@ -23,9 +22,7 @@ const cwd = process.cwd();
 
 export default async() => {
 
-    ensureConfig();
-
-    const userConfig = require(path.join(GTHome, `config.json`));
+    const userConfig = require(path.join(GTHome, CONFIG_FILE_NAME));
     const scaffoldConfig = userConfig.scaffold;
     const scaffoldNameList = Object.keys(scaffoldConfig);
 

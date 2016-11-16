@@ -20,6 +20,10 @@ make sure you have submitted your changes
 
 `gt init`
 
+`gt config add scaffold-name git-repo`
+
+`gt config remove scaffold-name`
+
 ## HOT TO SCAFFOLD USING GT?
 
 Implement `gt.js`, adding project info into user config.
@@ -118,7 +122,3 @@ Same as `updateFile`, but passing json object into `filter`
 - https://github.com/shelljs/shelljs
 - https://github.com/yargs/yargs
 - https://github.com/isaacs/minimatch
-
-## TODO
-
-[] gt config blabla...
