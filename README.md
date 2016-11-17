@@ -1,5 +1,7 @@
 # GRANTURISMO
 
+![GT](./assets/images/gt.jpg)
+
 [![NPM Version][npm-version-image]][npm-url]
 [![NPM Downloads][npm-downloads-image]][npm-url]
 [![MIT License][license-image]][license-url]
