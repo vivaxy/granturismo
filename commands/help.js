@@ -5,8 +5,10 @@
 
 export default () => {
     console.log(`
-    Usage: gt init
-            
-    Then choose what you need to start a new project.
+    Usage: gt
+
+        gt init
+        gt config
+        gt help
 `)
 };

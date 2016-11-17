@@ -7,8 +7,9 @@ import path from 'path';
 import sh from 'shelljs';
 import inquirer from 'inquirer';
 
+import * as configUtil from '../lib/configUtil';
 import updateScaffoldStat from '../lib/updateScaffoldStat';
-import { GTHome, CONFIG_FILE_NAME } from '../config';
+import { GTHome } from '../config';
 
 import getCopyFiles from '../presets/copyFiles';
 import getWriteFile from '../presets/writeFile';
@@ -22,13 +23,9 @@ const cwd = process.cwd();
 
 export default async() => {
 
-    const userConfig = require(path.join(GTHome, CONFIG_FILE_NAME));
+    const userConfig = configUtil.read();
     const scaffoldConfig = userConfig.scaffold;
-    const scaffoldNameList = Object.keys(scaffoldConfig);
-
-    scaffoldNameList.sort((prev, next) => {
-        return scaffoldConfig[prev].stat < scaffoldConfig[next].stat;
-    });
+    const scaffoldNameList = configUtil.readScaffoldListByStatOrder();
 
     const answer = await inquirer.prompt([
         {
@@ -68,7 +65,9 @@ ${clone.stderr}`);
             const projectGT = require(projectGTFilePath);
             let projectGit = null;
             try {
-                const result = sh.exec(`git remote get-url origin`);
+                const result = sh.exec(`git remote get-url origin`, {
+                    silent: true,
+                });
                 if (result.code === 0) {
                     const repositoryURL = result.stdout.split(`\n`)[0];
                     projectGit = {

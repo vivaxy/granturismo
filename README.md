@@ -20,6 +20,8 @@ workflow tool for scaffolding projects
 
 `gt init`
 
+`gt config list`
+
 `gt config add scaffold-name git-repo`
 
 `gt config remove scaffold-name`

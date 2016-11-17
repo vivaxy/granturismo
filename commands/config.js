@@ -5,29 +5,32 @@
 
 import path from 'path';
 import fse from 'fs-extra';
+import columnify from 'columnify';
 
-import { GTHome, CONFIG_FILE_NAME } from '../config';
+import * as configUtil from '../lib/configUtil';
+import { GTHome } from '../config';
 
 const ADD = `add`;
 const REMOVE = `remove`;
+const LIST = `list`;
 
-const acceptedAction = [ADD, REMOVE,];
+const acceptedAction = [ADD, REMOVE, LIST,];
 
 const help = () => {
     console.log(`
     Usage: gt config
-     
-        gt config add scaffold url
-        gt config remove scaffold
+
+        gt config list
+        gt config add [scaffold] [url]
+        gt config remove [scaffold]
 `);
     return false;
 };
 
 const editConfig = (filter) => {
-    const userConfigFile = path.join(GTHome, CONFIG_FILE_NAME);
-    const userConfig = require(userConfigFile);
-    const updatedUserConfig = filter(userConfig);
-    fse.outputJsonSync(userConfigFile, updatedUserConfig);
+    const config = configUtil.read();
+    const updatedUserConfig = filter(config);
+    configUtil.write(updatedUserConfig);
 };
 
 const add = (scaffoldName, ...restArgs) => {
@@ -59,14 +62,35 @@ const remove = (scaffoldName) => {
     });
 };
 
+const list = () => {
+    const userConfig = configUtil.read().scaffold;
+    const scaffoldList = configUtil.readScaffoldListByStatOrder();
+    const data = scaffoldList.map((scaffold) => {
+        return {
+            stat: userConfig[scaffold].stat,
+            name: scaffold,
+            repo: userConfig[scaffold].repo,
+        };
+    });
+    console.log(columnify(data));
+};
+
 const doAction = (action, ...restArgs) => {
 
     const scaffoldName = restArgs.shift();
-    if (action === ADD) {
-        add(scaffoldName, ...restArgs);
-    }
-    if (action === REMOVE) {
-        remove(scaffoldName, ...restArgs);
+    switch (action) {
+        case ADD:
+            add(scaffoldName, ...restArgs);
+            break;
+        case REMOVE:
+            remove(scaffoldName, ...restArgs);
+            break;
+        case LIST:
+            list();
+            break;
+        default:
+            throw new Error(`gt config ${action} not found`);
+            break;
     }
 };
 
