@@ -28,7 +28,7 @@ workflow tool for scaffolding projects
 
 `gt config remove scaffold-name`
 
-## WHO TO SCAFFOLD USING GT?
+## HOW TO SCAFFOLD USING GT?
 
 Implement `scripts/gt.js`, adding project info into user config.
 
