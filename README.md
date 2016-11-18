@@ -6,9 +6,15 @@
 [![NPM Downloads][npm-downloads-image]][npm-url]
 [![MIT License][license-image]][license-url]
 
-generator tool
+Generator Tool
 
-workflow tool for scaffolding projects
+Workflow tool for scaffolding projects.
+
+The streaming scaffold system.
+
+It is easy to learn and easy to use, more efficient.
+
+If you want to use a scaffold, the scaffold should be adapted to gt, but it is much more simpler than [yeoman](http://yeoman.io/).
 
 ## INSTALLATION
 
