@@ -1,6 +1,6 @@
 # GRANTURISMO
 
-![GT](./assets/images/gt.jpg)
+![GT](./assets/images/gt.png)
 
 [![NPM Version][npm-version-image]][npm-url]
 [![NPM Downloads][npm-downloads-image]][npm-url]
