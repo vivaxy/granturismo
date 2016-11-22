@@ -131,6 +131,11 @@ make sure you have submitted your changes
 
 `npm publish --registry="https://registry.npmjs.org/"`
 
+## SOME SIMILAR PROJECTS
+
+- [yeoman](http://yeoman.io/)
+- [node-scaffold-generator](https://github.com/kaelzhang/node-scaffold-generator)
+
 ## ENCOUNTERED PROBLEMS
 
 - npm postinstall scripts running by nobody, cannot write files in file system.
