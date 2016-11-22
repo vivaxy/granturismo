@@ -7,6 +7,9 @@
 
 const minimatch = require('minimatch');
 
+const PACKAGE_JSON = require('./package.json');
+const PROJECT_NAME = PACKAGE_JSON.name;
+
 const minimatchOption = {
     dot: true,
 };
@@ -18,10 +21,10 @@ require('babel-register')({
         // ignore **/node_modules/granturismo/node_modules/**
         // not ignore **/node_modules/granturismo/**
         // ignore **/node_modules/**
-        if (minimatch(filename, `**/node_modules/granturismo/node_modules/**`, minimatchOption)) {
+        if (minimatch(filename, `**/node_modules/${PROJECT_NAME}/node_modules/**`, minimatchOption)) {
             return true;
         }
-        if (minimatch(filename, `**/node_modules/granturismo/**`, minimatchOption)) {
+        if (minimatch(filename, `**/node_modules/${PROJECT_NAME}/**`, minimatchOption)) {
             return false;
         }
         if (minimatch(filename, `**/node_modules/**`, minimatchOption)) {
