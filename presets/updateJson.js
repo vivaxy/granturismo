@@ -4,7 +4,7 @@
  */
 
 import path from 'path';
-import fse from 'fs-extra';
+import fsp from 'fs-promise';
 
 export default (options) => {
 
@@ -13,16 +13,15 @@ export default (options) => {
         scaffold,
     } = options;
 
-    return (filename, filter) => {
+    return async(filename, filter) => {
 
         const sourceFolder = scaffold.folder;
         const distFolder = project.folder;
 
-        // console.log(`updating ${filename}...`);
         const sourceFilename = path.join(sourceFolder, filename);
         const distFilename = path.join(distFolder, filename);
-        const sourceData = fse.readJsonSync(sourceFilename);
+        const sourceData = await fsp.readJson(sourceFilename);
         const distData = filter(sourceData);
-        fse.outputJsonSync(distFilename, distData);
+        await fsp.outputJson(distFilename, distData);
     };
 };

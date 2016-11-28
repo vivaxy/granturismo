@@ -4,7 +4,7 @@
  */
 
 import path from 'path';
-import fse from 'fs-extra';
+import fsp from 'fs-promise';
 
 export default (options) => {
 
@@ -13,12 +13,11 @@ export default (options) => {
         scaffold,
     } = options;
 
-    return (filename, data) => {
+    return async(filename, data) => {
 
         const distFolder = project.folder;
         const distFilename = path.join(distFolder, filename);
 
-        // console.log(`writing ${filename}...`);
-        fse.outputFileSync(distFilename, data);
+        await fsp.outputFile(distFilename, data);
     };
 };

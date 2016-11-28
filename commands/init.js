@@ -4,12 +4,16 @@
  */
 
 import path from 'path';
-import sh from 'shelljs';
+import execa from 'execa';
 import inquirer from 'inquirer';
 
-import fileExists from '../lib/fileExists';
-import * as configUtil from '../lib/configUtil';
+import fileExists from '../file/fileExists';
+import directoryExists from '../file/directoryExists';
+import * as configManager from '../lib/configManager';
 import updateScaffoldStat from '../lib/updateScaffoldStat';
+import checkGitRepository from '../git/checkGitRepository'
+import getGitRemote from '../git/getRemote';
+import getInfoFromShell from '../lib/getInfoFromShell';
 import { GTHome } from '../config';
 
 import getCopyFiles from '../presets/copyFiles';
@@ -24,9 +28,9 @@ const cwd = process.cwd();
 
 export default async() => {
 
-    const userConfig = configUtil.read();
+    const userConfig = configManager.read();
     const scaffoldConfig = userConfig.scaffold;
-    const scaffoldNameList = configUtil.readScaffoldListByStatOrder();
+    const scaffoldNameList = configManager.readScaffoldListByStatOrder();
 
     const answer = await inquirer.prompt([
         {
@@ -41,24 +45,23 @@ export default async() => {
     const selectedScaffoldRepo = scaffoldConfig[selectedScaffoldName].repo;
     const selectedScaffoldFolder = path.join(GTHome, selectedScaffoldName);
 
-    console.log(`using scaffold: ${selectedScaffoldName}`);
-
-    if (!sh.test(`-d`, selectedScaffoldFolder)) {
-        console.log(`cloning: ${selectedScaffoldRepo}`);
-        const clone = sh.exec(`git clone ${selectedScaffoldRepo} ${selectedScaffoldFolder}`);
+    const selectedScaffoldFolderExists = await directoryExists(selectedScaffoldFolder);
+    if (!selectedScaffoldFolderExists) {
+        const clone = await execa(`git clone ${selectedScaffoldRepo} ${selectedScaffoldFolder}`);
         if (clone.code !== 0) {
             console.log(`clone error: ${selectedScaffoldRepo}
 ${clone.stderr}`);
-            sh.exit(1);
+            process.exit(1);
         }
     }
 
-    sh.cd(selectedScaffoldFolder);
+    process.chdir(selectedScaffoldFolder);
+    console.log(process.cwd());
     console.log(`git pull...`);
-    sh.exec(`git pull`);
+    await execa(`git`, [`pull`]);
     console.log(`npm install...`);
-    sh.exec(`npm install`);
-    sh.cd(cwd);
+    await execa(`npm`, [`install`]);
+    process.chdir(cwd);
 
     const projectGTFilePath = path.join(GTHome, selectedScaffoldName, projectGTFile);
 
@@ -67,17 +70,14 @@ ${clone.stderr}`);
         try {
             const projectGT = require(projectGTFilePath);
             let projectGit = null;
-            try {
-                const result = sh.exec(`git remote get-url origin`, {
-                    silent: true,
-                });
-                if (result.code === 0) {
-                    const repositoryURL = result.stdout.split(`\n`)[0];
-                    projectGit = {
-                        repositoryURL,
-                    };
-                }
-            } catch (ex) {
+
+            const isGitRepository = await checkGitRepository();
+            if (isGitRepository) {
+                const remote = await getGitRemote();
+                const repositoryURL = await getInfoFromShell(`git`, [`remote`, `get-url`, remote]);
+                projectGit = {
+                    repositoryURL,
+                };
             }
 
             const GTInfo = {
@@ -102,7 +102,7 @@ ${clone.stderr}`);
 
             await projectGT.init(GTInfo);
 
-            updateScaffoldStat(selectedScaffoldName);
+            await updateScaffoldStat(selectedScaffoldName);
 
         } catch (ex) {
             console.log(ex);

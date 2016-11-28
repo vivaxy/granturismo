@@ -4,10 +4,10 @@
  */
 
 import path from 'path';
-import fse from 'fs-extra';
+import fsp from 'fs-promise';
 import columnify from 'columnify';
 
-import * as configUtil from '../lib/configUtil';
+import * as configManager from '../lib/configManager';
 import { GTHome } from '../config';
 
 const ADD = `add`;
@@ -27,16 +27,16 @@ usage: gt config
     return false;
 };
 
-const editConfig = (filter) => {
-    const config = configUtil.read();
-    const updatedUserConfig = filter(config);
-    configUtil.write(updatedUserConfig);
+const editConfig = async(filter) => {
+    const config = configManager.read();
+    const updatedUserConfig = await filter(config);
+    await configManager.write(updatedUserConfig);
 };
 
-const add = (scaffoldName, ...restArgs) => {
+const add = async(scaffoldName, ...restArgs) => {
     const repo = restArgs.shift();
     if (repo) {
-        editConfig((userConfig) => {
+        await editConfig((userConfig) => {
             let stat = 0;
             if (userConfig.scaffold[scaffoldName]) {
                 stat = userConfig.scaffold[scaffoldName].stat;
@@ -53,18 +53,18 @@ const add = (scaffoldName, ...restArgs) => {
     }
 };
 
-const remove = (scaffoldName) => {
-    editConfig((userConfig) => {
+const remove = async(scaffoldName) => {
+    await editConfig(async(userConfig) => {
         const newConfig = Object.assign({}, userConfig);
         delete newConfig.scaffold[scaffoldName];
-        fse.removeSync(path.join(GTHome, scaffoldName));
+        await fsp.remove(path.join(GTHome, scaffoldName));
         return newConfig;
     });
 };
 
 const list = () => {
-    const userConfig = configUtil.read().scaffold;
-    const scaffoldList = configUtil.readScaffoldListByStatOrder();
+    const userConfig = configManager.read().scaffold;
+    const scaffoldList = configManager.readScaffoldListByStatOrder();
     const data = scaffoldList.map((scaffold) => {
         return {
             stat: userConfig[scaffold].stat,
@@ -75,15 +75,15 @@ const list = () => {
     console.log(columnify(data));
 };
 
-const doAction = (action, ...restArgs) => {
+const doAction = async(action, ...restArgs) => {
 
     const scaffoldName = restArgs.shift();
     switch (action) {
         case ADD:
-            add(scaffoldName, ...restArgs);
+            await add(scaffoldName, ...restArgs);
             break;
         case REMOVE:
-            remove(scaffoldName, ...restArgs);
+            await remove(scaffoldName, ...restArgs);
             break;
         case LIST:
             list();
@@ -94,12 +94,12 @@ const doAction = (action, ...restArgs) => {
     }
 };
 
-export default (...restArgs) => {
+export default async(...restArgs) => {
 
     const action = restArgs.shift();
     if (acceptedAction.indexOf(action) === -1) {
         help();
     } else {
-        doAction(action, ...restArgs);
+        await doAction(action, ...restArgs);
     }
 };

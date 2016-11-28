@@ -4,7 +4,7 @@
  */
 
 import path from 'path';
-import fse from 'fs-extra';
+import fsp from 'fs-promise';
 
 export default (options) => {
 
@@ -13,19 +13,13 @@ export default (options) => {
         scaffold,
     } = options;
 
-    return (files) => {
+    return async(files) => {
 
         const sourceFolder = scaffold.folder;
         const distFolder = project.folder;
 
-        // console.log(`distFolder: ${distFolder}`);
-        // console.log(`sourceFolder: ${sourceFolder}`);
-
-        // console.log(`copying ${sourceFolder} into ${distFolder}...`);
-        // copy all files
-        files.forEach((file) => {
-            // console.log(`copying ${file}...`);
-            fse.copySync(path.join(sourceFolder, file), path.join(distFolder, file));
-        });
+        await Promise.all(files.map((file) => {
+            return fsp.copy(path.join(sourceFolder, file), path.join(distFolder, file));
+        }));
     };
 };

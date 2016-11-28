@@ -5,10 +5,10 @@
 
 export default () => {
     console.log(`
-    Usage: gt
+usage: gt
 
-        gt init
-        gt config
-        gt help
+    gt init
+    gt config
+    gt help
 `)
 };
