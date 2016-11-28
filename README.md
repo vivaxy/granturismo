@@ -5,6 +5,7 @@
 [![NPM Version][npm-version-image]][npm-url]
 [![NPM Downloads][npm-downloads-image]][npm-url]
 [![MIT License][license-image]][license-url]
+[![Standard Version][standard-version-image]][standard-version-url]
 
 Generator Tool
 
@@ -123,13 +124,13 @@ Same as `writeFile`, but passing json object into second parameter
 
 Same as `updateFile`, but passing json object into `filter`
 
-## PUBLISH
+## Contribute
 
 make sure you have submitted your changes
 
-`npm version patch`
+`npm run release`
 
-`npm publish --registry="https://registry.npmjs.org/"`
+`gacp; npm publish --registry="https://registry.npmjs.org/"`
 
 ## SOME SIMILAR PROJECTS
 
@@ -156,3 +157,5 @@ make sure you have submitted your changes
 [npm-downloads-image]: https://img.shields.io/npm/dt/granturismo.svg?style=flat-square
 [license-image]: https://img.shields.io/npm/l/granturismo.svg?style=flat-square
 [license-url]: LICENSE
+[standard-version-image]: https://img.shields.io/badge/release-standard%20version-brightgreen.svg?style=flat-square
+[standard-version-url]: https://github.com/conventional-changelog/standard-version
