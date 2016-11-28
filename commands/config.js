@@ -18,11 +18,11 @@ const acceptedAction = [ADD, REMOVE, LIST,];
 
 const help = () => {
     console.log(`
-    Usage: gt config
+usage: gt config
 
-        gt config list
-        gt config add [scaffold] [url]
-        gt config remove [scaffold]
+    gt config list
+    gt config add [scaffold] [url]
+    gt config remove [scaffold]
 `);
     return false;
 };

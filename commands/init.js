@@ -7,6 +7,7 @@ import path from 'path';
 import sh from 'shelljs';
 import inquirer from 'inquirer';
 
+import fileExists from '../lib/fileExists';
 import * as configUtil from '../lib/configUtil';
 import updateScaffoldStat from '../lib/updateScaffoldStat';
 import { GTHome } from '../config';
@@ -60,7 +61,9 @@ ${clone.stderr}`);
     sh.cd(cwd);
 
     const projectGTFilePath = path.join(GTHome, selectedScaffoldName, projectGTFile);
-    if (sh.test(`-f`, projectGTFilePath)) {
+
+    const projectGTFileExists = await fileExists(projectGTFilePath);
+    if (projectGTFileExists) {
         try {
             const projectGT = require(projectGTFilePath);
             let projectGit = null;
