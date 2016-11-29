@@ -101,7 +101,10 @@ const updateStat = async({selectedScaffoldName}) => {
     await updateScaffoldStat(selectedScaffoldName);
 };
 
-export default async() => {
+export const command = `init`;
+export const describe = `Choose a scaffold to init your new project`;
+export const builder = {};
+export const handler = async() => {
 
     const userConfig = configManager.read();
     const scaffoldConfig = userConfig.scaffold;
@@ -168,4 +171,4 @@ export default async() => {
         console.error(ex);
     }
 
-}
+};

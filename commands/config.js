@@ -3,6 +3,7 @@
  * @author vivaxy
  */
 
+import yargs from 'yargs';
 import path from 'path';
 import fsp from 'fs-promise';
 import columnify from 'columnify';
@@ -16,25 +17,15 @@ const LIST = `list`;
 
 const acceptedAction = [ADD, REMOVE, LIST,];
 
-const help = () => {
-    console.log(`
-usage: gt config
-
-    gt config list
-    gt config add [scaffold] [url]
-    gt config remove [scaffold]
-`);
-    return false;
-};
-
 const editConfig = async(filter) => {
     const config = configManager.read();
     const updatedUserConfig = await filter(config);
     await configManager.write(updatedUserConfig);
 };
 
-const add = async(scaffoldName, ...restArgs) => {
-    const repo = restArgs.shift();
+const add = async(argv) => {
+    const scaffoldName = argv.name;
+    const repo = argv.repo;
     if (repo) {
         await editConfig((userConfig) => {
             let stat = 0;
@@ -53,7 +44,8 @@ const add = async(scaffoldName, ...restArgs) => {
     }
 };
 
-const remove = async(scaffoldName) => {
+const remove = async(argv) => {
+    const scaffoldName = argv.name;
     await editConfig(async(userConfig) => {
         const newConfig = Object.assign({}, userConfig);
         delete newConfig.scaffold[scaffoldName];
@@ -75,15 +67,15 @@ const list = () => {
     console.log(columnify(data));
 };
 
-const doAction = async(action, ...restArgs) => {
+const doAction = async(argv) => {
 
-    const scaffoldName = restArgs.shift();
+    const action = argv.command;
     switch (action) {
         case ADD:
-            await add(scaffoldName, ...restArgs);
+            await add(argv);
             break;
         case REMOVE:
-            await remove(scaffoldName, ...restArgs);
+            await remove(argv);
             break;
         case LIST:
             list();
@@ -94,12 +86,15 @@ const doAction = async(action, ...restArgs) => {
     }
 };
 
-export default async(...restArgs) => {
+export const command = `config <command> [name] [repo]`;
+export const describe = `Show or edit config`;
+export const builder = {};
+export const handler = async(argv) => {
 
-    const action = restArgs.shift();
+    const action = argv.command;
     if (acceptedAction.indexOf(action) === -1) {
-        help();
+        yargs.showHelp();
     } else {
-        await doAction(action, ...restArgs);
+        await doAction(argv);
     }
 };
