@@ -5,6 +5,7 @@
 
 import path from 'path';
 import execa from 'execa';
+import Listr from 'listr';
 import inquirer from 'inquirer';
 
 import fileExists from '../file/fileExists';
@@ -26,6 +27,80 @@ const projectGTFile = `scripts/gt.js`;
 
 const cwd = process.cwd();
 
+const gitCloneTask = async({selectedScaffoldRepo, selectedScaffoldFolder}) => {
+    const clone = await execa(`git clone ${selectedScaffoldRepo} ${selectedScaffoldFolder}`);
+    if (clone.code !== 0) {
+        throw new Error(`clone error: ${selectedScaffoldRepo}
+${clone.stderr}`);
+    }
+};
+
+const gitPullTask = async({selectedScaffoldFolder}) => {
+    process.chdir(selectedScaffoldFolder);
+    await execa(`git`, [`pull`]);
+};
+
+const npmInstallTask = async() => {
+    await execa(`npm`, [`install`]);
+    process.chdir(cwd);
+};
+
+const prepareForScaffoldGT = async(ctx) => {
+
+    const {selectedScaffoldName, selectedScaffoldFolder} = ctx;
+
+    const projectGTFilePath = path.join(GTHome, selectedScaffoldName, projectGTFile);
+    const projectGTFileExists = await fileExists(projectGTFilePath);
+
+    if (projectGTFileExists) {
+        const projectGT = require(projectGTFilePath);
+        let projectGit = null;
+
+        const isGitRepository = await checkGitRepository();
+        if (isGitRepository) {
+            const remote = await getGitRemote();
+            const repositoryURL = await getInfoFromShell(`git`, [`remote`, `get-url`, remote]);
+            projectGit = {
+                repositoryURL,
+            };
+        }
+
+        const GTInfo = {
+            project: {
+                folder: cwd,
+                name: cwd.split(path.sep).pop(),
+                git: projectGit,
+            },
+            scaffold: {
+                folder: selectedScaffoldFolder,
+                name: selectedScaffoldName,
+            },
+        };
+
+        GTInfo.presets = {
+            copyFiles: getCopyFiles(GTInfo),
+            writeFile: getWriteFile(GTInfo),
+            updateFile: getUpdateFile(GTInfo),
+            writeJson: getWriteJson(GTInfo),
+            updateJson: getUpdateJson(GTInfo),
+        };
+
+        ctx.projectGT = projectGT;
+        ctx.GTInfo = GTInfo;
+
+    } else {
+        throw new Error(`no gt script found in ${selectedScaffoldName}`);
+    }
+};
+
+const runScaffoldGT = async({projectGT, GTInfo}) => {
+    return await projectGT.init(GTInfo);
+};
+
+const updateStat = async({selectedScaffoldName}) => {
+    await updateScaffoldStat(selectedScaffoldName);
+};
+
 export default async() => {
 
     const userConfig = configManager.read();
@@ -45,69 +120,52 @@ export default async() => {
     const selectedScaffoldRepo = scaffoldConfig[selectedScaffoldName].repo;
     const selectedScaffoldFolder = path.join(GTHome, selectedScaffoldName);
 
-    const selectedScaffoldFolderExists = await directoryExists(selectedScaffoldFolder);
-    if (!selectedScaffoldFolderExists) {
-        const clone = await execa(`git clone ${selectedScaffoldRepo} ${selectedScaffoldFolder}`);
-        if (clone.code !== 0) {
-            console.log(`clone error: ${selectedScaffoldRepo}
-${clone.stderr}`);
-            process.exit(1);
+    const tasks = [
+        {
+            title: `clone scaffold`,
+            task: gitCloneTask,
+            skip: async() => {
+                const selectedScaffoldFolderExists = await directoryExists(selectedScaffoldFolder);
+                if (selectedScaffoldFolderExists) {
+                    return `scaffold exists`;
+                }
+            },
+        },
+        {
+            title: `update scaffold codes`,
+            task: gitPullTask,
+        },
+        {
+            title: `update scaffold npm packages`,
+            task: npmInstallTask,
+        },
+        {
+            title: `prepare for scaffold GT`,
+            task: prepareForScaffoldGT,
+        },
+        {
+            title: `run scaffold GT`,
+            task: runScaffoldGT,
+        },
+        {
+            title: `finish up`,
+            task: updateStat,
+        },
+    ];
+
+    const listr = new Listr(tasks);
+
+    try {
+        const {projectGT} = await listr.run({
+            selectedScaffoldName,
+            selectedScaffoldRepo,
+            selectedScaffoldFolder,
+        });
+        if (projectGT.after) {
+            await projectGT.after();
         }
+    } catch (ex) {
+        console.error(ex);
     }
 
-    process.chdir(selectedScaffoldFolder);
-    console.log(process.cwd());
-    console.log(`git pull...`);
-    await execa(`git`, [`pull`]);
-    console.log(`npm install...`);
-    await execa(`npm`, [`install`]);
-    process.chdir(cwd);
-
-    const projectGTFilePath = path.join(GTHome, selectedScaffoldName, projectGTFile);
-
-    const projectGTFileExists = await fileExists(projectGTFilePath);
-    if (projectGTFileExists) {
-        try {
-            const projectGT = require(projectGTFilePath);
-            let projectGit = null;
-
-            const isGitRepository = await checkGitRepository();
-            if (isGitRepository) {
-                const remote = await getGitRemote();
-                const repositoryURL = await getInfoFromShell(`git`, [`remote`, `get-url`, remote]);
-                projectGit = {
-                    repositoryURL,
-                };
-            }
-
-            const GTInfo = {
-                project: {
-                    folder: cwd,
-                    name: cwd.split(path.sep).pop(),
-                    git: projectGit,
-                },
-                scaffold: {
-                    folder: selectedScaffoldFolder,
-                    name: selectedScaffoldName,
-                },
-            };
-
-            GTInfo.presets = {
-                copyFiles: getCopyFiles(GTInfo),
-                writeFile: getWriteFile(GTInfo),
-                updateFile: getUpdateFile(GTInfo),
-                writeJson: getWriteJson(GTInfo),
-                updateJson: getUpdateJson(GTInfo),
-            };
-
-            await projectGT.init(GTInfo);
-
-            await updateScaffoldStat(selectedScaffoldName);
-
-        } catch (ex) {
-            console.log(ex);
-        }
-    } else {
-        console.log(`no gt script found in ${selectedScaffoldName}`);
-    }
 }
