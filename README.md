@@ -123,6 +123,10 @@ Same as `writeFile`, but passing json object into second parameter
 
 Same as `updateFile`, but passing json object into `filter`
 
+## Change log
+
+[Change log](CHANGELOG.md)
+
 ## Contribute
 
 make sure you have submitted your changes
