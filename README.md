@@ -1,4 +1,4 @@
-# GRANTURISMO
+# granturismo
 
 ![GT](./assets/images/gt.png)
 
@@ -17,16 +17,16 @@ It is easy to learn and easy to use, more efficient.
 
 If you want to use a scaffold, the scaffold should be adapted to gt, but it is much more simpler than [yeoman](http://yeoman.io/).
 
-## SCAFFOLDS
+## Scaffolds
 
 - [vivaxy/react-scaffold](https://github.com/vivaxy/react-scaffold) react, redux, router...
 - [vivaxy/front-end-scaffold](https://github.com/vivaxy/front-end-scaffold) eslint...
 
-## INSTALLATION
+## Installation
 
 `sudo npm i -g granturismo`
 
-## USAGE
+## Usage
 
 `gt`
 
@@ -40,11 +40,11 @@ If you want to use a scaffold, the scaffold should be adapted to gt, but it is m
 
 `gt config remove scaffold-name`
 
-## HOW TO SCAFFOLD USING GT?
+## How to Scaffold Using GT?
 
 Implement `scripts/gt.js`, adding project info into user config.
 
-See [react-scaffold](https://github.com/vivaxy/react-scaffold) as example.
+See [react-scaffold](https://github.com/vivaxy/react-scaffold/blob/master/scripts/gt.js) as example.
 
 ### gt.js
 
@@ -64,11 +64,11 @@ GT cli invokes `init` method in `scaffold/scripts/gt.js`, and passing options in
         name: 'scaffold-name',
     },
     presets: {
-        copyFiles: () => {},
-        writeFile: () => {},
-        updateFile: () => {},
-        writeJson: () => {},
-        updateJson: () => {},
+        copyFiles: async () => {},
+        writeFile: async () => {},
+        updateFile: async () => {},
+        writeJson: async () => {},
+        updateJson: async () => {},
     },
 }
 ```
@@ -82,7 +82,7 @@ GT cli invokes `init` method in `scaffold/scripts/gt.js`, and passing options in
 eg.
 
 ```
-const copyFiles = (options) => {
+const copyFiles = async() => {
 
     const {
         presets,
@@ -99,8 +99,7 @@ const copyFiles = (options) => {
         `webpack.config.js`,
     ];
 
-    console.log(`copying files...`);
-    presets.copyFiles(files);
+    await presets.copyFiles(files);
 };
 ```
 
@@ -132,12 +131,12 @@ make sure you have submitted your changes
 
 `gacp; npm publish --registry="https://registry.npmjs.org/"`
 
-## SOME SIMILAR PROJECTS
+## Some Similar Projects
 
 - [yeoman](http://yeoman.io/)
 - [node-scaffold-generator](https://github.com/kaelzhang/node-scaffold-generator)
 
-## ENCOUNTERED PROBLEMS
+## Encountered Problems
 
 - npm postinstall scripts running by nobody, cannot write files in file system.
 
@@ -145,12 +144,14 @@ make sure you have submitted your changes
     
     when running `gt init`, user is current login user (whoami === 'vivaxy'), whence we can write files.
 
-## REFERENCE
+## Reference
 
-- https://github.com/jprichardson/node-fs-extra
-- https://github.com/shelljs/shelljs
-- https://github.com/yargs/yargs
-- https://github.com/isaacs/minimatch
+- [fs-extra](https://github.com/jprichardson/node-fs-extra)
+- [shelljs](https://github.com/shelljs/shelljs)
+- [yargs](https://github.com/yargs/yargs)
+- [minimatch](https://github.com/isaacs/minimatch)
+- [listr](https://github.com/SamVerschueren/listr)
+- [fs-promise](https://github.com/kevinbeaty/fs-promise)
 
 [npm-version-image]: http://img.shields.io/npm/v/granturismo.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/granturismo
