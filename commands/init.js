@@ -28,7 +28,7 @@ const projectGTFile = `scripts/gt.js`;
 const cwd = process.cwd();
 
 const gitCloneTask = async({selectedScaffoldRepo, selectedScaffoldFolder}) => {
-    const clone = await execa(`git clone ${selectedScaffoldRepo} ${selectedScaffoldFolder}`);
+    const clone = await execa(`git`, [`clone`, selectedScaffoldRepo, selectedScaffoldFolder]);
     if (clone.code !== 0) {
         throw new Error(`clone error: ${selectedScaffoldRepo}
 ${clone.stderr}`);
@@ -132,11 +132,11 @@ export default async() => {
             },
         },
         {
-            title: `update scaffold codes`,
+            title: `pull scaffold`,
             task: gitPullTask,
         },
         {
-            title: `update scaffold npm packages`,
+            title: `install scaffold npm packages`,
             task: npmInstallTask,
         },
         {
