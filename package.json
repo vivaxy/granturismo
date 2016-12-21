@@ -38,6 +38,7 @@
     "standard-version": "^3.0.0"
   },
   "scripts": {
-    "release": "standard-version"
+    "release": "standard-version",
+    "test": "node test/minimatch.js"
   }
 }

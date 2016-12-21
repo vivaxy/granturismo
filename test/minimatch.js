@@ -15,3 +15,8 @@ result = minimatch(`/Users/vivaxy/.gt/gt-peon-react-redux/node_modules/babel-hel
     dot: true,
 });
 console.log(result, true);
+
+result = minimatch(`/Users/vivaxy/.gt/adp/gt-bc-promo-component/scripts/gt.js`, `**/node_modules/**`, {
+    dot: true,
+});
+console.log(result, false);
