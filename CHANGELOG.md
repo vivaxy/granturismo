@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.4"></a>
+## [1.0.4](https://github.com/vivaxy/granturismo/compare/v1.0.3...v1.0.4) (2017-01-16)
+
+
+### Bug Fixes
+
+* **ensure config:** :bug:Fix `~/.gt/config.json` not exists, an error thrown ([551d47b](https://github.com/vivaxy/granturismo/commit/551d47b))
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/vivaxy/granturismo/compare/v1.0.2...v1.0.3) (2016-12-21)
 
