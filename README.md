@@ -133,8 +133,6 @@ make sure you have submitted your changes
 
 `npm run release`
 
-`gacp; npm publish --registry="https://registry.npmjs.org/"`
-
 ## Some Similar Projects
 
 - [yeoman](http://yeoman.io/)

@@ -38,7 +38,7 @@
     "standard-version": "^3.0.0"
   },
   "scripts": {
-    "release": "standard-version",
+    "release": "standard-version && git push --tag && npm publish --registry=\"https://registry.npmjs.org/\"",
     "test": "node test/minimatch.js"
   }
 }
