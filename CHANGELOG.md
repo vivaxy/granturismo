@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.5"></a>
+## [1.0.5](https://github.com/vivaxy/granturismo/compare/v1.0.4...v1.0.5) (2017-02-05)
+
+
+### Bug Fixes
+
+* **config:** :bug:Update config.json ([b2b00cf](https://github.com/vivaxy/granturismo/commit/b2b00cf))
+* **configManager:** :bug:Fix scaffold order by stat ([3144d2b](https://github.com/vivaxy/granturismo/commit/3144d2b))
+
+
+
 <a name="1.0.4"></a>
 ## [1.0.4](https://github.com/vivaxy/granturismo/compare/v1.0.3...v1.0.4) (2017-01-16)
 
