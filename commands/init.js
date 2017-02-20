@@ -180,7 +180,7 @@ export const handler = async() => {
         listrContext.GTInfo.config = {};
 
         if (listrContext.projectGT.ask) {
-            listrContext.GTInfo.config = await projectGT.ask(listrContext.GTInfo);
+            listrContext.GTInfo.config = await listrContext.projectGT.ask(listrContext.GTInfo);
         }
 
         listrContext = await postListr.run(listrContext);
