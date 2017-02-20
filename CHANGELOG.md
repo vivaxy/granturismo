@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/vivaxy/granturismo/compare/v1.3.0...v1.4.0) (2017-02-20)
+
+
+### Features
+
+* **commit-ish:** :sparkles:Support commit-ish from selectedScaffoldRepo ([0b125b6](https://github.com/vivaxy/granturismo/commit/0b125b6))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/vivaxy/granturismo/compare/v1.2.1...v1.3.0) (2017-02-20)
 
