@@ -40,8 +40,13 @@ const gitPullTask = async({selectedScaffoldFolder}) => {
     await execa(`git`, [`pull`]);
 };
 
-const npmInstallTask = async() => {
-    await execa(`npm`, [`install`]);
+const npmInstallTask = async({selectedScaffoldFolder,}) => {
+    const yarnLockExists = await fileExists(path.join(selectedScaffoldFolder, 'yarn.lock'));
+    if (yarnLockExists) {
+        await execa(`yarn`, [`install`]);
+    } else {
+        await execa(`npm`, [`install`]);
+    }
     process.chdir(cwd);
 };
 
