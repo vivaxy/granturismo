@@ -48,9 +48,28 @@ See [react-scaffold](https://github.com/vivaxy/react-scaffold/blob/master/script
 
 ### gt.js
 
-GT cli invokes `init` method in `scaffold/scripts/gt.js`, and passing options into `init`.
+GT cli invokes methods in `scaffold/scripts/gt.js`, and passing options into `init`.
 
 ```js
+// gt.js
+/**
+ * `ask` will be invoked first
+ * prompt questions
+ * `config` returned will be passed into `init` and `after` by `options.config`
+ */, 
+export const ask = async(options) => {
+    return config;
+};
+export const init = async(options) => {
+    
+};
+export const after = async(options) => {
+    
+};
+```
+
+```js
+// options
 {
     project: {
         folder: '/absolute/path/to/project/folder',
@@ -70,6 +89,21 @@ GT cli invokes `init` method in `scaffold/scripts/gt.js`, and passing options in
         writeJson: async () => {},
         updateJson: async () => {},
     },
+}
+```
+
+```js
+/**
+ * listr context
+ * do not modify existing attributes
+ * if you want to passing variables in listr context, add a new attribute
+ */
+{
+    selectedScaffoldName,
+    selectedScaffoldRepo,
+    selectedScaffoldFolder,
+    projectGT: {}, // js object required from `./scripts/gt.js`
+    GTInfo: {}, // options
 }
 ```
 

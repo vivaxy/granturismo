@@ -35,7 +35,7 @@ ${clone.stderr}`);
     }
 };
 
-const gitPullTask = async({selectedScaffoldFolder}) => {
+const gitPullTask = async({selectedScaffoldFolder,}) => {
     process.chdir(selectedScaffoldFolder);
     await execa(`git`, [`pull`]);
 };
@@ -128,7 +128,7 @@ export const handler = async() => {
     const selectedScaffoldRepo = scaffoldConfig[selectedScaffoldName].repo;
     const selectedScaffoldFolder = path.join(GTHome, selectedScaffoldName);
 
-    const tasks = [
+    const preTasks = [
         {
             title: `clone scaffold`,
             task: gitCloneTask,
@@ -151,6 +151,9 @@ export const handler = async() => {
             title: `prepare for scaffold GT`,
             task: prepareForScaffoldGT,
         },
+    ];
+
+    const postTasks = [
         {
             title: `run scaffold GT`,
             task: runScaffoldGT,
@@ -161,17 +164,31 @@ export const handler = async() => {
         },
     ];
 
-    const listr = new Listr(tasks);
+    const preListr = new Listr(preTasks);
+    const postListr = new Listr(postTasks);
 
     try {
-        const {projectGT} = await listr.run({
+
+        let listrContext = {
             selectedScaffoldName,
             selectedScaffoldRepo,
             selectedScaffoldFolder,
-        });
-        if (projectGT.after) {
-            await projectGT.after();
+        };
+
+        listrContext = await preListr.run(listrContext);
+
+        listrContext.GTInfo.config = {};
+
+        if (listrContext.projectGT.ask) {
+            listrContext.GTInfo.config = await projectGT.ask(listrContext.GTInfo);
         }
+
+        listrContext = await postListr.run(listrContext);
+
+        if (listrContext.projectGT.after) {
+            await listrContext.projectGT.after(listrContext.GTInfo);
+        }
+
     } catch (ex) {
         console.error(ex);
     }
