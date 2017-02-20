@@ -44,7 +44,7 @@ If you want to use a scaffold, the scaffold should be adapted to gt, but it is m
 
 Implement `scripts/gt.js`, adding project info into user config.
 
-See [react-scaffold](https://github.com/vivaxy/react-scaffold/blob/master/scripts/gt.js) as an es6 example, [front-end-scaffold](https://github.com/vivaxy/front-end-scaffold/blob/master/scripts/gt.js) as an es5 example.
+See [gt-react-scaffold](https://github.com/vivaxy/gt-react-scaffold/blob/master/scripts/gt.js) and [gt-front-end-scaffold](https://github.com/vivaxy/gt-front-end-scaffold/blob/master/scripts/gt.js) for examples.
 
 ### gt.js
 
