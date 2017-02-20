@@ -37,6 +37,7 @@ selectedScaffoldRepo: ${selectedScaffoldRepo}
 repoURL: ${repoURL}
 ${clone.stderr}`);
     }
+    process.chdir(selectedScaffoldFolder);
     if (commitIsh) {
         const checkout = await execa(`git`, [`checkout`, commitIsh]);
         if (clone.code !== 0) {
@@ -48,8 +49,7 @@ ${clone.stderr}`);
     }
 };
 
-const gitPullTask = async({selectedScaffoldFolder,}) => {
-    process.chdir(selectedScaffoldFolder);
+const gitPullTask = async() => {
     await execa(`git`, [`pull`]);
 };
 
