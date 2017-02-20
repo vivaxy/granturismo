@@ -47,13 +47,17 @@ commitIsh: ${commitIsh}
 ${clone.stderr}`);
         }
     }
+    process.chdir(cwd);
 };
 
-const gitPullTask = async() => {
+const gitPullTask = async({selectedScaffoldFolder,}) => {
+    process.chdir(selectedScaffoldFolder);
     await execa(`git`, [`pull`]);
+    process.chdir(cwd);
 };
 
 const npmInstallTask = async({selectedScaffoldFolder,}) => {
+    process.chdir(selectedScaffoldFolder);
     const yarnLockExists = await fileExists(path.join(selectedScaffoldFolder, 'yarn.lock'));
     if (yarnLockExists) {
         await execa(`yarn`, [`install`]);
