@@ -28,11 +28,23 @@ const projectGTFile = `scripts/gt.js`;
 
 const cwd = process.cwd();
 
-const gitCloneTask = async({selectedScaffoldRepo, selectedScaffoldFolder}) => {
-    const clone = await execa(`git`, [`clone`, selectedScaffoldRepo, selectedScaffoldFolder]);
+const gitCloneTask = async({selectedScaffoldRepo, selectedScaffoldFolder,}) => {
+    const [repoURL, commitIsh,] = selectedScaffoldRepo.split('#');
+    const clone = await execa(`git`, [`clone`, repoURL, selectedScaffoldFolder]);
     if (clone.code !== 0) {
-        throw new Error(`clone error: ${selectedScaffoldRepo}
+        throw new Error(`clone error:
+selectedScaffoldRepo: ${selectedScaffoldRepo}
+repoURL: ${repoURL}
 ${clone.stderr}`);
+    }
+    if (commitIsh) {
+        const checkout = await execa(`git`, [`checkout`, commitIsh]);
+        if (clone.code !== 0) {
+            throw new Error(`checkout error:
+selectedScaffoldRepo: ${selectedScaffoldRepo}
+commitIsh: ${commitIsh}
+${clone.stderr}`);
+        }
     }
 };
 
