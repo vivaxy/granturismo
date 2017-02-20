@@ -22,6 +22,7 @@ import getWriteFile from '../presets/writeFile';
 import getUpdateFile from '../presets/updateFile';
 import getWriteJson from '../presets/writeJson';
 import getUpdateJson from '../presets/updateJson';
+import getRemoveFiles from '../presets/removeFiles';
 
 const projectGTFile = `scripts/gt.js`;
 
@@ -88,6 +89,7 @@ const prepareForScaffoldGT = async(ctx) => {
             updateFile: getUpdateFile(GTInfo),
             writeJson: getWriteJson(GTInfo),
             updateJson: getUpdateJson(GTInfo),
+            removeFiles: getRemoveFiles(GTInfo),
         };
 
         ctx.projectGT = projectGT;

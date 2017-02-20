@@ -83,11 +83,12 @@ export const after = async(options) => {
         name: 'scaffold-name',
     },
     presets: {
-        copyFiles: async () => {},
-        writeFile: async () => {},
-        updateFile: async () => {},
-        writeJson: async () => {},
-        updateJson: async () => {},
+        copyFiles: async() => {},
+        writeFile: async() => {},
+        updateFile: async() => {},
+        writeJson: async() => {},
+        updateJson: async() => {},
+        removeFiles: async() => {},
     },
 }
 ```
@@ -156,6 +157,12 @@ Same as `writeFile`, but passing json object into second parameter
 `filter{Function}` `filter({Object}) => {Object}`
 
 Same as `updateFile`, but passing json object into `filter`
+
+##### removeFiles(fileList)
+
+`fileList` `Array[String]` is an array containing filename your want to copy.
+
+Same as `copyFiles`, but remove files in project folder
 
 ## Change log
 
