@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/vivaxy/granturismo/compare/v1.2.1...v1.3.0) (2017-02-20)
+
+
+### Features
+
+* **removeFiles:** :sparkles:Add removeFiles preset ([8a9c1c1](https://github.com/vivaxy/granturismo/commit/8a9c1c1))
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/vivaxy/granturismo/compare/v1.2.0...v1.2.1) (2017-02-20)
 
