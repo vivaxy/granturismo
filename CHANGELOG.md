@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/vivaxy/granturismo/compare/v1.0.5...v1.1.0) (2017-02-20)
+
+
+### Features
+
+* **npmInstall:** :sparkles:Using yarn if `yarn.lock` exists within scaffold ([4932250](https://github.com/vivaxy/granturismo/commit/4932250))
+
+
+
 <a name="1.0.5"></a>
 ## [1.0.5](https://github.com/vivaxy/granturismo/compare/v1.0.4...v1.0.5) (2017-02-05)
 
