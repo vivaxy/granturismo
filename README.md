@@ -110,9 +110,9 @@ export const after = async(options) => {
 
 #### presets
 
-##### copyFiles(fileList)
+##### copyFiles(fileList {Array[String]})
 
-`fileList` `Array[String]` is an array containing filename your want to copy.
+`fileList` `Array[String]` is an array containing filename your want to copy
 
 eg.
 
@@ -138,29 +138,35 @@ const copyFiles = async() => {
 };
 ```
 
-##### writeFile({String}, {String})
+##### writeFile(file {String}, content {String})
 
 Write string into file under project folder
 
-##### updateFile({String}, filter{Function})
+##### updateFile(file {String}, filter {Function})
 
-`filter{Function}` `filter({String}) => {String}`
+`filter {Function}` `filter(input {String}) => output {String}`
 
 Read file from scaffold, passing into `filter`, write filter result into file under project folder
 
-##### writeJson({String}, {Object})
+##### updateFiles(files {Array[String]}, filter {Function})
+
+`filter {Function}` `filter(input {String}) => output {String}`
+
+Read file from scaffold, passing into `filter`, write filter result into file under project folder
+
+##### writeJson(file {String}, json {Object})
 
 Same as `writeFile`, but passing json object into second parameter
 
-##### updateJson({String}, filter{Function})
+##### updateJson(file {String}, filter {Function})
 
-`filter{Function}` `filter({Object}) => {Object}`
+`filter {Function}` `filter(input {Object}) => output {Object}`
 
 Same as `updateFile`, but passing json object into `filter`
 
-##### removeFiles(fileList)
+##### removeFiles(fileList {Array[String]})
 
-`fileList` `Array[String]` is an array containing filename your want to copy.
+`fileList` `Array[String]` is an array containing filename your want to copy
 
 Same as `copyFiles`, but remove files in project folder
 
