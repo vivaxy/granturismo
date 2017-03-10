@@ -20,6 +20,7 @@ import { GTHome } from '../config';
 import getCopyFiles from '../presets/copyFiles';
 import getWriteFile from '../presets/writeFile';
 import getUpdateFile from '../presets/updateFile';
+import getUpdateFiles from '../presets/updateFiles';
 import getWriteJson from '../presets/writeJson';
 import getUpdateJson from '../presets/updateJson';
 import getRemoveFiles from '../presets/removeFiles';
@@ -106,6 +107,7 @@ const prepareForScaffoldGT = async(ctx) => {
             writeJson: getWriteJson(GTInfo),
             updateJson: getUpdateJson(GTInfo),
             removeFiles: getRemoveFiles(GTInfo),
+            updateFiles: getUpdateFiles(GTInfo),
         };
 
         ctx.projectGT = projectGT;
