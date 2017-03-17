@@ -32,6 +32,7 @@
     "inquirer": "^1.2.3",
     "listr": "^0.8.0",
     "minimatch": "^3.0.3",
+    "update-notifier": "^2.1.0",
     "yargs": "^6.4.0"
   },
   "devDependencies": {
