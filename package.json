@@ -36,10 +36,14 @@
     "yargs": "^6.4.0"
   },
   "devDependencies": {
+    "babel-core": "^6.24.0",
+    "glob": "^7.1.1",
+    "glob-promise": "^3.1.0",
     "standard-version": "^3.0.0"
   },
   "scripts": {
     "release": "standard-version && git push --follow-tags && npm publish --registry=\"https://registry.npmjs.org/\"",
-    "test": "node test/minimatch.js"
+    "test": "node test/minimatch.js",
+    "build": "node ./scripts/build.js"
   }
 }

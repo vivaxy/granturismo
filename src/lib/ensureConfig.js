@@ -4,7 +4,7 @@
  */
 
 import * as configManager from './configManager';
-import config from '../config/config.json';
+import config from '../config/config';
 
 export default async() => {
     if (!await configManager.exist()) {

@@ -3,11 +3,12 @@
  * @author vivaxy
  */
 
+import 'babel-polyfill';
 import yargs from 'yargs';
 import updateNotifier from 'update-notifier';
-import pkg from '../package.json';
+import pkg from '../../package.json';
 
-import ensureConfig from '../lib/ensureConfig';
+import ensureConfig from './ensureConfig';
 
 const configureYargs = () => {
     return yargs
