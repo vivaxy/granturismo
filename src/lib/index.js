@@ -3,30 +3,29 @@
  * @author vivaxy
  */
 
+import 'babel-polyfill';
 import yargs from 'yargs';
 import updateNotifier from 'update-notifier';
-import pkg from '../package.json';
+import pkg from '../../package.json';
 
-import ensureConfig from '../lib/ensureConfig';
+import ensureConfig from './ensureConfig';
 
 const configureYargs = () => {
     return yargs
-        .commandDir(`../commands`)
+        .commandDir('../commands')
         .help()
         .version()
         .argv._;
 };
 
-const main = async () => {
-
-    updateNotifier({pkg}).notify();
+const main = async() => {
+    updateNotifier({ pkg }).notify();
 
     await ensureConfig();
 
     configureYargs();
-
 };
 
 main().catch((ex) => {
-    console.error(ex);
+    throw ex;
 });

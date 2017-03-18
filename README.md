@@ -2,10 +2,12 @@
 
 ![GT](./assets/images/gt.png)
 
+[![Build Status][travis-image]][travis-url]
 [![NPM Version][npm-version-image]][npm-url]
 [![NPM Downloads][npm-downloads-image]][npm-url]
 [![MIT License][license-image]][license-url]
 [![Standard Version][standard-version-image]][standard-version-url]
+[![Codecov][codecov-image]][codecov-url]
 
 Generator Tool
 
@@ -202,6 +204,8 @@ make sure you have submitted your changes
 - [listr](https://github.com/SamVerschueren/listr)
 - [fs-promise](https://github.com/kevinbeaty/fs-promise)
 
+[travis-image]: https://img.shields.io/travis/vivaxy/granturismo.svg?style=flat-square
+[travis-url]: https://travis-ci.org/vivaxy/granturismo
 [npm-version-image]: http://img.shields.io/npm/v/granturismo.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/granturismo
 [npm-downloads-image]: https://img.shields.io/npm/dt/granturismo.svg?style=flat-square
@@ -209,3 +213,5 @@ make sure you have submitted your changes
 [license-url]: LICENSE
 [standard-version-image]: https://img.shields.io/badge/release-standard%20version-brightgreen.svg?style=flat-square
 [standard-version-url]: https://github.com/conventional-changelog/standard-version
+[codecov-image]: https://img.shields.io/codecov/c/github/vivaxy/granturismo.svg?style=flat-square
+[codecov-url]: https://codecov.io/gh/vivaxy/granturismo

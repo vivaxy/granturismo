@@ -7,14 +7,11 @@ import path from 'path';
 import fsp from 'fs-promise';
 
 export default (options) => {
-
     const {
         project,
-        scaffold,
     } = options;
 
     return async(filename, data) => {
-
         const distFolder = project.folder;
         const distFilename = path.join(distFolder, filename);
 

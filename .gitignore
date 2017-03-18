@@ -2,3 +2,7 @@
 node_modules
 .DS_Store
 npm-debug.log
+/build
+.nyc_output
+coverage
+coverage.lcov
