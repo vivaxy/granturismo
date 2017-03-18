@@ -9,3 +9,5 @@ npm-debug.log
 /.babelrc
 /.editorconfig
 /.eslintrc
+.nyc_output
+coverage

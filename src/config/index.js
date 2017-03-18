@@ -3,5 +3,5 @@
  * @author vivaxy
  */
 
-export const GTHome = `${process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE}/.gt`;
+export const GT_HOME = `${process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE}/.gt`;
 export const CONFIG_FILE_NAME = 'config.json';

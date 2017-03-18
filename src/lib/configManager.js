@@ -7,9 +7,9 @@ import path from 'path';
 import fsp from 'fs-promise';
 
 import fileExists from '../file/fileExists';
-import { GTHome, CONFIG_FILE_NAME } from '../config';
+import { GT_HOME, CONFIG_FILE_NAME } from '../config';
 
-const userConfigFile = path.join(GTHome, CONFIG_FILE_NAME);
+const userConfigFile = path.join(GT_HOME, CONFIG_FILE_NAME);
 
 export const read = () => {
     return require(userConfigFile); // eslint-disable-line global-require, import/no-dynamic-require

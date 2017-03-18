@@ -9,7 +9,7 @@ import fsp from 'fs-promise';
 import columnify from 'columnify';
 
 import * as configManager from '../lib/configManager';
-import { GTHome } from '../config';
+import { GT_HOME } from '../config';
 
 const ADD = 'add';
 const REMOVE = 'remove';
@@ -49,7 +49,7 @@ const remove = async(argv) => {
     await editConfig(async(userConfig) => {
         const newConfig = Object.assign({}, userConfig);
         delete newConfig.scaffold[scaffoldName];
-        await fsp.remove(path.join(GTHome, scaffoldName));
+        await fsp.remove(path.join(GT_HOME, scaffoldName));
         return newConfig;
     });
 };

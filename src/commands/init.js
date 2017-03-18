@@ -15,7 +15,7 @@ import updateScaffoldStat from '../lib/updateScaffoldStat';
 import checkGitRepository from '../git/checkGitRepository';
 import getGitRemote from '../git/getRemote';
 import getInfoFromShell from '../lib/getInfoFromShell';
-import { GTHome } from '../config';
+import { GT_HOME } from '../config';
 
 import getCopyFiles from '../presets/copyFiles';
 import getWriteFile from '../presets/writeFile';
@@ -71,7 +71,7 @@ const npmInstallTask = async({ selectedScaffoldFolder }) => {
 const prepareForScaffoldGT = async(ctx) => {
     const { selectedScaffoldName, selectedScaffoldFolder } = ctx;
 
-    const projectGTFilePath = path.join(GTHome, selectedScaffoldName, projectGTFile);
+    const projectGTFilePath = path.join(GT_HOME, selectedScaffoldName, projectGTFile);
     const projectGTFileExists = await fileExists(projectGTFilePath);
 
     if (projectGTFileExists) {
@@ -143,7 +143,7 @@ export const handler = async() => {
 
     const selectedScaffoldName = answer.scaffold;
     const selectedScaffoldRepo = scaffoldConfig[selectedScaffoldName].repo;
-    const selectedScaffoldFolder = path.join(GTHome, selectedScaffoldName);
+    const selectedScaffoldFolder = path.join(GT_HOME, selectedScaffoldName);
 
     const preTasks = [
         {
