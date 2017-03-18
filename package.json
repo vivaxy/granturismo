@@ -37,13 +37,20 @@
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0",
     "glob": "^7.1.1",
     "glob-promise": "^3.1.0",
     "standard-version": "^3.0.0"
   },
   "scripts": {
-    "release": "standard-version && git push --follow-tags && npm publish --registry=\"https://registry.npmjs.org/\"",
+    "release": "npm run lint && npm run build && npm run test && standard-version && git push --follow-tags && npm publish --registry=\"https://registry.npmjs.org/\"",
     "test": "node test/minimatch.js",
-    "build": "node ./scripts/build.js"
+    "build": "node ./scripts/build.js",
+    "lint": "eslint ./src"
   }
 }

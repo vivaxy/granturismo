@@ -7,13 +7,11 @@ import path from 'path';
 import fsp from 'fs-promise';
 
 export default (options) => {
-
     const {
         project,
     } = options;
 
     return async(files) => {
-
         const folder = project.folder;
 
         await Promise.all(files.map((file) => {

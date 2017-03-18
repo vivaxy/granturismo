@@ -7,6 +7,6 @@ import * as configManager from './configManager';
 
 export default async(scaffoldName) => {
     const userConfig = configManager.read();
-    userConfig.scaffold[scaffoldName].stat = userConfig.scaffold[scaffoldName].stat + 1;
+    userConfig.scaffold[scaffoldName].stat++;
     await configManager.write(userConfig);
 };

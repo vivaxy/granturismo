@@ -4,10 +4,10 @@
  */
 
 export default {
-    "scaffold": {
-        "vivaxy/gt-react-scaffold": {
-            "repo": "https://github.com/vivaxy/gt-react-scaffold.git",
-            "stat": 0
-        }
-    }
-}
+    scaffold: {
+        'vivaxy/gt-react-scaffold': {
+            repo: 'https://github.com/vivaxy/gt-react-scaffold.git',
+            stat: 0,
+        },
+    },
+};

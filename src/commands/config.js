@@ -11,11 +11,11 @@ import columnify from 'columnify';
 import * as configManager from '../lib/configManager';
 import { GTHome } from '../config';
 
-const ADD = `add`;
-const REMOVE = `remove`;
-const LIST = `list`;
+const ADD = 'add';
+const REMOVE = 'remove';
+const LIST = 'list';
 
-const acceptedAction = [ADD, REMOVE, LIST,];
+const acceptedAction = [ADD, REMOVE, LIST];
 
 const editConfig = async(filter) => {
     const config = configManager.read();
@@ -40,7 +40,7 @@ const add = async(argv) => {
             return newConfig;
         });
     } else {
-        help();
+        yargs.showHelp();
     }
 };
 
@@ -64,11 +64,10 @@ const list = () => {
             repo: userConfig[scaffold].repo,
         };
     });
-    console.log(columnify(data));
+    console.log(columnify(data)); // eslint-disable-line no-console
 };
 
 const doAction = async(argv) => {
-
     const action = argv.command;
     switch (action) {
         case ADD:
@@ -82,15 +81,13 @@ const doAction = async(argv) => {
             break;
         default:
             throw new Error(`gt config ${action} not found`);
-            break;
     }
 };
 
-export const command = `config <command> [name] [repo]`;
-export const describe = `Show or edit config`;
+export const command = 'config <command> [name] [repo]';
+export const describe = 'Show or edit config';
 export const builder = {};
 export const handler = async(argv) => {
-
     const action = argv.command;
     if (acceptedAction.indexOf(action) === -1) {
         yargs.showHelp();

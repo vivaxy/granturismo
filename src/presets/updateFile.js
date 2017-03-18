@@ -8,14 +8,12 @@ import path from 'path';
 import fsp from 'fs-promise';
 
 export default (options) => {
-
     const {
         project,
         scaffold,
     } = options;
 
     return async(filename, filter) => {
-
         const sourceFolder = scaffold.folder;
         const distFolder = project.folder;
 
