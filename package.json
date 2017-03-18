@@ -50,6 +50,7 @@
     "standard-version": "^3.0.0"
   },
   "scripts": {
+    "beta": "npm run lint && npm run build && npm run test && npm publish --registry=\"https://registry.npmjs.org/\" --tag beta",
     "release": "npm run lint && npm run build && npm run test && standard-version && git push --follow-tags && npm publish --registry=\"https://registry.npmjs.org/\"",
     "test": "cross-env NODE_ENV=test nyc ava && nyc report --reporter=html",
     "build": "cross-env NODE_ENV=production node ./scripts/build.js",
