@@ -53,7 +53,8 @@
     "release": "npm run lint && npm run build && npm run test && standard-version && git push --follow-tags && npm publish --registry=\"https://registry.npmjs.org/\"",
     "test": "cross-env NODE_ENV=test nyc ava && nyc report --reporter=html",
     "build": "cross-env NODE_ENV=production node ./scripts/build.js",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov"
   },
   "ava": {
     "files": [
