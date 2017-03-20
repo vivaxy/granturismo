@@ -46,9 +46,9 @@
     "standard-version": "^3.0.0"
   },
   "scripts": {
-    "beta": "npm run lint && npm run build && npm run test && npm publish --registry=\"https://registry.npmjs.org/\" --tag beta",
-    "release": "npm run lint && npm run build && npm run test && standard-version && git push --follow-tags && npm publish --registry=\"https://registry.npmjs.org/\"",
-    "test": "cross-env NODE_ENV=test nyc ava && nyc report --reporter=html && nyc report --reporter=lcov > coverage.lcov",
+    "beta": "npm run test && npm run build && npm publish --tag beta",
+    "release": "npm run test && npm run build && standard-version && git push --follow-tags && npm publish",
+    "test": "npm run lint && cross-env NODE_ENV=test nyc ava && nyc report --reporter=html && nyc report --reporter=lcov > coverage.lcov",
     "build": "cross-env NODE_ENV=production node ./scripts/build.js",
     "lint": "eslint ./src"
   },
