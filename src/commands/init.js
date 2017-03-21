@@ -13,6 +13,7 @@ import directoryExists from '../file/directoryExists';
 import * as configManager from '../lib/configManager';
 import updateScaffoldStat from '../lib/updateScaffoldStat';
 import checkGitRepository from '../git/checkGitRepository';
+import checkGitClean from '../git/getClean';
 import getGitRemote from '../git/getRemote';
 import getInfoFromShell from '../lib/getInfoFromShell';
 import { GT_HOME } from '../config';
@@ -53,6 +54,10 @@ ${clone.stderr}`);
 
 const gitPullTask = async({ selectedScaffoldFolder }) => {
     process.chdir(selectedScaffoldFolder);
+    const gitClean = await checkGitClean();
+    if (!gitClean) {
+        await execa('git', ['checkout', '.']);
+    }
     await execa('git', ['pull']);
     process.chdir(cwd);
 };
