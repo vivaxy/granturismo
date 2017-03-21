@@ -50,6 +50,17 @@ See [gt-react-scaffold](https://github.com/vivaxy/gt-react-scaffold/blob/master/
 
 ### gt.js
 
+If you want to use es6 in `gt.js`, please use `babel-register` or babel-built js.
+
+```js
+// using `babel-register`
+if (!global._babelPolyfill) {
+    require('babel-polyfill');
+}
+require('babel-register');
+module.exports = require('./gt/index');
+```
+
 GT cli invokes methods in `scaffold/scripts/gt.js`, and passing options into `init`.
 
 ```js
