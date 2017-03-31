@@ -26,6 +26,10 @@ If you want to use a scaffold, the scaffold should be adapted to gt, but it is m
 
 ## Installation
 
+Make sure your git version >= 2.7.0
+
+Make sure you have installed nodejs
+
 `sudo npm i -g granturismo`
 
 ## Usage
