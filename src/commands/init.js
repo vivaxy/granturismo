@@ -14,8 +14,7 @@ import * as configManager from '../lib/configManager';
 import updateScaffoldStat from '../lib/updateScaffoldStat';
 import checkGitRepository from '../git/checkGitRepository';
 import checkGitClean from '../git/getClean';
-import getGitRemote from '../git/getRemote';
-import getInfoFromShell from '../lib/getInfoFromShell';
+import getGitRemoteURL from '../git/getRemoteURL';
 import { GT_HOME } from '../config';
 
 import getCopyFiles from '../presets/copyFiles';
@@ -85,8 +84,7 @@ const prepareForScaffoldGT = async(ctx) => {
 
         const isGitRepository = await checkGitRepository();
         if (isGitRepository) {
-            const remote = await getGitRemote();
-            const repositoryURL = await getInfoFromShell('git', ['remote', 'get-url', remote]);
+            const repositoryURL = await getGitRemoteURL();
             projectGit = {
                 repositoryURL,
             };
