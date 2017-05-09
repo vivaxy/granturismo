@@ -194,17 +194,20 @@ export const handler = async() => {
         selectedScaffoldFolder,
     };
 
-    listrContext = await preListr.run(listrContext);
+    try {
+        listrContext = await preListr.run(listrContext);
+        listrContext.GTInfo.config = {};
 
-    listrContext.GTInfo.config = {};
+        if (listrContext.projectGT.ask) {
+            listrContext.GTInfo.config = await listrContext.projectGT.ask(listrContext.GTInfo);
+        }
 
-    if (listrContext.projectGT.ask) {
-        listrContext.GTInfo.config = await listrContext.projectGT.ask(listrContext.GTInfo);
-    }
+        listrContext = await postListr.run(listrContext);
 
-    listrContext = await postListr.run(listrContext);
-
-    if (listrContext.projectGT.after) {
-        await listrContext.projectGT.after(listrContext.GTInfo);
+        if (listrContext.projectGT.after) {
+            await listrContext.projectGT.after(listrContext.GTInfo);
+        }
+    } catch (ex) {
+        console.log(ex);
     }
 };
