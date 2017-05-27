@@ -4,7 +4,7 @@
  */
 
 import path from 'path';
-import fsp from 'fs-promise';
+import fse from 'fs-extra';
 
 export default (options) => {
     const {
@@ -18,8 +18,8 @@ export default (options) => {
 
         const sourceFilename = path.join(sourceFolder, filename);
         const distFilename = path.join(distFolder, filename);
-        const sourceData = await fsp.readJson(sourceFilename);
+        const sourceData = await fse.readJson(sourceFilename);
         const distData = filter(sourceData);
-        await fsp.outputJson(distFilename, distData);
+        await fse.outputJson(distFilename, distData);
     };
 };

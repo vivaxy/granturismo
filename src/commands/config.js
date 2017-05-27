@@ -5,7 +5,7 @@
 
 import yargs from 'yargs';
 import path from 'path';
-import fsp from 'fs-promise';
+import fse from 'fs-extra';
 import columnify from 'columnify';
 
 import * as configManager from '../lib/configManager';
@@ -49,7 +49,7 @@ const remove = async(argv) => {
     await editConfig(async(userConfig) => {
         const newConfig = Object.assign({}, userConfig);
         delete newConfig.scaffold[scaffoldName];
-        await fsp.remove(path.join(GT_HOME, scaffoldName));
+        await fse.remove(path.join(GT_HOME, scaffoldName));
         return newConfig;
     });
 };

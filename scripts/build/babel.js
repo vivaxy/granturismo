@@ -6,13 +6,13 @@
 import path from 'path';
 
 import glob from 'glob-promise';
-import fsp from 'fs-promise';
-import {transformFile} from 'babel-core';
+import fse from 'fs-extra';
+import { transformFile } from 'babel-core';
 
-import {SOURCE_PATH, BUILD_PATH} from '../config';
+import { SOURCE_PATH, BUILD_PATH } from '../config';
 
-export default async () => {
-    const sourceFiles = path.join(SOURCE_PATH, `**`, `*.js`);
+export default async() => {
+    const sourceFiles = path.join(SOURCE_PATH, '**', '*.js');
     const files = await glob(sourceFiles);
 
     const transformJobs = files.map((file) => {
@@ -33,9 +33,9 @@ export default async () => {
 
     const results = await Promise.all(transformJobs);
 
-    const writeJobs = results.map(({relativeFilename, code}) => {
+    const writeJobs = results.map(({ relativeFilename, code }) => {
         const outputFilename = path.join(BUILD_PATH, relativeFilename);
-        return fsp.outputFile(outputFilename, code);
+        return fse.outputFile(outputFilename, code);
     });
 
     return await Promise.all(writeJobs);

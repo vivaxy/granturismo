@@ -217,7 +217,6 @@ make sure you have submitted your changes
 - [yargs](https://github.com/yargs/yargs)
 - [minimatch](https://github.com/isaacs/minimatch)
 - [listr](https://github.com/SamVerschueren/listr)
-- [fs-promise](https://github.com/kevinbeaty/fs-promise)
 
 [travis-image]: https://img.shields.io/travis/vivaxy/granturismo.svg?style=flat-square
 [travis-url]: https://travis-ci.org/vivaxy/granturismo

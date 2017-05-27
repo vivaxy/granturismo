@@ -5,7 +5,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import fsp from 'fs-promise';
+import fse from 'fs-extra';
 
 export default (options) => {
     const {
@@ -21,6 +21,6 @@ export default (options) => {
         const distFilename = path.join(distFolder, filename);
         const sourceData = fs.readFileSync(sourceFilename, 'utf8');
         const distData = filter(sourceData);
-        await fsp.outputFile(distFilename, distData);
+        await fse.outputFile(distFilename, distData);
     };
 };
