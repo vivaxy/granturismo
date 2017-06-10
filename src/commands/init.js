@@ -7,6 +7,7 @@ import path from 'path';
 import execa from 'execa';
 import Listr from 'listr';
 import inquirer from 'inquirer';
+import fse from 'fs-extra';
 
 import fileExists from '../file/fileExists';
 import directoryExists from '../file/directoryExists';
@@ -15,7 +16,7 @@ import updateScaffoldStat from '../lib/updateScaffoldStat';
 import checkGitRepository from '../git/checkGitRepository';
 import checkGitClean from '../git/getClean';
 import getGitRemoteURL from '../git/getRemoteURL';
-import { GT_HOME } from '../config';
+import { GT_HOME, MODULES_FOLDER, GIT_FOLDER, PROJECT_GT_FILE } from '../config';
 
 import getCopyFiles from '../presets/copyFiles';
 import getWriteFile from '../presets/writeFile';
@@ -25,11 +26,9 @@ import getWriteJson from '../presets/writeJson';
 import getUpdateJson from '../presets/updateJson';
 import getRemoveFiles from '../presets/removeFiles';
 
-const projectGTFile = 'scripts/gt.js';
-
 const cwd = process.cwd();
 
-const gitCloneTask = async({ selectedScaffoldRepo, selectedScaffoldFolder }) => {
+const gitCloneTask = async ({ selectedScaffoldRepo, selectedScaffoldFolder }) => {
     const [repoURL, commitIsh] = selectedScaffoldRepo.split('#');
     const clone = await execa('git', ['clone', repoURL, selectedScaffoldFolder]);
     if (clone.code !== 0) {
@@ -51,7 +50,7 @@ ${clone.stderr}`);
     process.chdir(cwd);
 };
 
-const gitPullTask = async({ selectedScaffoldFolder }) => {
+const gitPullTask = async ({ selectedScaffoldFolder }) => {
     process.chdir(selectedScaffoldFolder);
     const gitClean = await checkGitClean();
     if (!gitClean) {
@@ -61,7 +60,7 @@ const gitPullTask = async({ selectedScaffoldFolder }) => {
     process.chdir(cwd);
 };
 
-const npmInstallTask = async({ selectedScaffoldFolder }) => {
+const npmInstallTask = async ({ selectedScaffoldFolder }) => {
     process.chdir(selectedScaffoldFolder);
     const yarnLockExists = await fileExists(path.join(selectedScaffoldFolder, 'yarn.lock'));
     if (yarnLockExists) {
@@ -72,65 +71,76 @@ const npmInstallTask = async({ selectedScaffoldFolder }) => {
     process.chdir(cwd);
 };
 
-const prepareForScaffoldGT = async(ctx) => {
-    const { selectedScaffoldName, selectedScaffoldFolder } = ctx;
-
-    const projectGTFilePath = path.join(GT_HOME, selectedScaffoldName, projectGTFile);
-    const projectGTFileExists = await fileExists(projectGTFilePath);
-
-    if (projectGTFileExists) {
-        const projectGT = require(projectGTFilePath); // eslint-disable-line global-require, import/no-dynamic-require
-        let projectGit = null;
-
-        const isGitRepository = await checkGitRepository();
-        if (isGitRepository) {
-            const repositoryURL = await getGitRemoteURL();
-            projectGit = {
-                repositoryURL,
-            };
+const prepareForCopyProjectFiles = async (ctx) => {
+    const { selectedScaffoldFolder } = ctx;
+    const copyInfo = {
+        project: {
+            folder: cwd,
+        },
+        scaffold: {
+            folder: selectedScaffoldFolder,
         }
-
-        const GTInfo = {
-            project: {
-                folder: cwd,
-                name: cwd.split(path.sep).pop(),
-                git: projectGit,
-            },
-            scaffold: {
-                folder: selectedScaffoldFolder,
-                name: selectedScaffoldName,
-            },
-        };
-
-        GTInfo.presets = {
-            copyFiles: getCopyFiles(GTInfo),
-            writeFile: getWriteFile(GTInfo),
-            updateFile: getUpdateFile(GTInfo),
-            writeJson: getWriteJson(GTInfo),
-            updateJson: getUpdateJson(GTInfo),
-            removeFiles: getRemoveFiles(GTInfo),
-            updateFiles: getUpdateFiles(GTInfo),
-        };
-
-        ctx.projectGT = projectGT; // eslint-disable-line no-param-reassign
-        ctx.GTInfo = GTInfo; // eslint-disable-line no-param-reassign
-    } else {
-        throw new Error(`no gt script found in ${selectedScaffoldName}`);
-    }
+    };
+    const copyFiles = getCopyFiles(copyInfo);
+    const files = await fse.readdir(selectedScaffoldFolder);
+    const excludeGitFiles = files.filter((file) => file !== GIT_FOLDER && file !== MODULES_FOLDER);
+    copyFiles(excludeGitFiles);
 };
 
-const runScaffoldGT = async({ projectGT, GTInfo }) => {
+const prepareForScaffoldGT = async (ctx) => {
+    const { selectedScaffoldName, selectedScaffoldFolder, projectGTFilePath } = ctx;
+
+    const projectGT = require(projectGTFilePath); // eslint-disable-line global-require, import/no-dynamic-require
+    let projectGit = null;
+
+    const isGitRepository = await checkGitRepository();
+    if (isGitRepository) {
+        const repositoryURL = await getGitRemoteURL();
+        projectGit = {
+            repositoryURL,
+        };
+    }
+
+    const GTInfo = {
+        project: {
+            folder: cwd,
+            name: cwd.split(path.sep).pop(),
+            git: projectGit,
+        },
+        scaffold: {
+            folder: selectedScaffoldFolder,
+            name: selectedScaffoldName,
+        },
+    };
+
+    GTInfo.presets = {
+        copyFiles: getCopyFiles(GTInfo),
+        writeFile: getWriteFile(GTInfo),
+        updateFile: getUpdateFile(GTInfo),
+        writeJson: getWriteJson(GTInfo),
+        updateJson: getUpdateJson(GTInfo),
+        removeFiles: getRemoveFiles(GTInfo),
+        updateFiles: getUpdateFiles(GTInfo),
+    };
+
+    ctx.projectGT = projectGT; // eslint-disable-line no-param-reassign
+    ctx.GTInfo = GTInfo; // eslint-disable-line no-param-reassign
+};
+
+const runScaffoldGT = async ({ projectGT, GTInfo }) => {
     return await projectGT.init(GTInfo);
 };
 
-const updateStat = async({ selectedScaffoldName }) => {
+const updateStat = async ({ selectedScaffoldName }) => {
     await updateScaffoldStat(selectedScaffoldName);
 };
+
+let projectGTFileExists = false;
 
 export const command = 'init';
 export const describe = 'Choose a scaffold to init your new project';
 export const builder = {};
-export const handler = async() => {
+export const handler = async () => {
     const userConfig = configManager.read();
     const scaffoldConfig = userConfig.scaffold;
     const scaffoldNameList = configManager.readScaffoldListByStatOrder();
@@ -148,11 +158,13 @@ export const handler = async() => {
     const selectedScaffoldRepo = scaffoldConfig[selectedScaffoldName].repo;
     const selectedScaffoldFolder = path.join(GT_HOME, selectedScaffoldName);
 
-    const preTasks = [
+    const projectGTFilePath = path.join(GT_HOME, selectedScaffoldName, PROJECT_GT_FILE);
+
+    const gitTasks = [
         {
             title: 'clone scaffold',
             task: gitCloneTask,
-            skip: async() => {
+            skip: async () => {
                 const selectedScaffoldFolderExists = await directoryExists(selectedScaffoldFolder);
                 if (selectedScaffoldFolderExists) {
                     return 'scaffold exists';
@@ -164,47 +176,65 @@ export const handler = async() => {
             title: 'pull scaffold',
             task: gitPullTask,
         },
-        {
-            title: 'install scaffold npm packages',
-            task: npmInstallTask,
-        },
-        {
-            title: 'prepare for scaffold GT',
-            task: prepareForScaffoldGT,
-        },
     ];
 
+    const preTasks = [];
+
     const postTasks = [
-        {
-            title: 'run scaffold GT',
-            task: runScaffoldGT,
-        },
         {
             title: 'finish up',
             task: updateStat,
         },
     ];
 
-    const preListr = new Listr(preTasks);
-    const postListr = new Listr(postTasks);
+    const gitListr = new Listr(gitTasks);
 
     let listrContext = {
         selectedScaffoldName,
         selectedScaffoldRepo,
         selectedScaffoldFolder,
+        projectGTFilePath,
     };
 
     try {
-        listrContext = await preListr.run(listrContext);
-        listrContext.GTInfo.config = {};
+        listrContext = await gitListr.run(listrContext);
 
-        if (listrContext.projectGT.ask) {
+        projectGTFileExists = await fileExists(projectGTFilePath);
+
+        if (projectGTFileExists) {
+            preTasks.push({
+                title: 'install scaffold npm packages',
+                task: npmInstallTask,
+            }, {
+                title: 'prepare for scaffold GT',
+                task: prepareForScaffoldGT,
+            });
+            postTasks.unshift({
+                title: 'run scaffold GT',
+                task: runScaffoldGT,
+            });
+        } else {
+            preTasks.push({
+                title: 'prepare for copy project files',
+                task: prepareForCopyProjectFiles,
+            });
+        }
+
+        const preListr = new Listr(preTasks);
+        const postListr = new Listr(postTasks);
+
+        listrContext = await preListr.run(listrContext);
+        if (listrContext.GTInfo) {
+            listrContext.GTInfo.config = {};
+        }
+
+        if (listrContext.projectGT && listrContext.projectGT.ask) {
             listrContext.GTInfo.config = await listrContext.projectGT.ask(listrContext.GTInfo);
         }
 
         listrContext = await postListr.run(listrContext);
 
-        if (listrContext.projectGT.after) {
+        if (listrContext.projectGT && listrContext.projectGT.after) {
             await listrContext.projectGT.after(listrContext.GTInfo);
         }
     } catch (ex) {
