@@ -187,9 +187,9 @@ Same as `updateFile`, but passing json object into `filter`
 
 Same as `copyFiles`, but remove files in project folder
 
-## Change log
+## Change Log
 
-[Change log](CHANGELOG.md)
+[Change Log](CHANGELOG.md)
 
 ## Contribute
 
@@ -197,27 +197,11 @@ make sure you have submitted your changes
 
 `npm run release`
 
-## Some Similar Projects
+## Prior Art
 
 - [yeoman](http://yeoman.io/)
 - [node-scaffold-generator](https://github.com/kaelzhang/node-scaffold-generator)
-
-## Encountered Problems
-
-- npm postinstall scripts running by nobody, cannot write files in file system.
-
-    @see http://stackoverflow.com/questions/25011703/write-file-in-home-directory-when-running-npm-install
-    
-    when running `gt init`, user is current login user (whoami === 'vivaxy'), whence we can write files.
-
-## Reference
-
-- [fs-extra](https://github.com/jprichardson/node-fs-extra)
-- [shelljs](https://github.com/shelljs/shelljs)
-- [yargs](https://github.com/yargs/yargs)
-- [minimatch](https://github.com/isaacs/minimatch)
-- [listr](https://github.com/SamVerschueren/listr)
-- [fs-promise](https://github.com/kevinbeaty/fs-promise)
+- [generate](https://github.com/generate/generate)
 
 [travis-image]: https://img.shields.io/travis/vivaxy/granturismo.svg?style=flat-square
 [travis-url]: https://travis-ci.org/vivaxy/granturismo

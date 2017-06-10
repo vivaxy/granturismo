@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.7.1"></a>
+## [1.7.1](https://github.com/vivaxy/granturismo/compare/v1.7.0...v1.7.1) (2017-05-27)
+
+
+
+<a name="1.7.0"></a>
+# [1.7.0](https://github.com/vivaxy/granturismo/compare/v1.6.2...v1.7.0) (2017-05-09)
+
+
+### Features
+
+* **log:** :sparkles:Add console.log for listr errors ([fe756da](https://github.com/vivaxy/granturismo/commit/fe756da))
+
+
+
 <a name="1.6.2"></a>
 ## [1.6.2](https://github.com/vivaxy/granturismo/compare/v1.6.1...v1.6.2) (2017-03-21)
 

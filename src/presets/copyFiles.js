@@ -4,7 +4,7 @@
  */
 
 import path from 'path';
-import fsp from 'fs-promise';
+import fse from 'fs-extra';
 
 export default (options) => {
     const {
@@ -17,7 +17,7 @@ export default (options) => {
         const distFolder = project.folder;
 
         await Promise.all(files.map((file) => {
-            return fsp.copy(path.join(sourceFolder, file), path.join(distFolder, file));
+            return fse.copy(path.join(sourceFolder, file), path.join(distFolder, file));
         }));
     };
 };

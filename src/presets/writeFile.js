@@ -4,7 +4,7 @@
  */
 
 import path from 'path';
-import fsp from 'fs-promise';
+import fse from 'fs-extra';
 
 export default (options) => {
     const {
@@ -15,6 +15,6 @@ export default (options) => {
         const distFolder = project.folder;
         const distFilename = path.join(distFolder, filename);
 
-        await fsp.outputFile(distFilename, data);
+        await fse.outputFile(distFilename, data);
     };
 };
