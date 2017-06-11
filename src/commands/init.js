@@ -28,7 +28,7 @@ import getRemoveFiles from '../presets/removeFiles';
 
 const cwd = process.cwd();
 
-const gitCloneTask = async ({ selectedScaffoldRepo, selectedScaffoldFolder }) => {
+const gitCloneTask = async({ selectedScaffoldRepo, selectedScaffoldFolder }) => {
     const [repoURL, commitIsh] = selectedScaffoldRepo.split('#');
     const clone = await execa('git', ['clone', repoURL, selectedScaffoldFolder]);
     if (clone.code !== 0) {
@@ -50,7 +50,7 @@ ${clone.stderr}`);
     process.chdir(cwd);
 };
 
-const gitPullTask = async ({ selectedScaffoldFolder }) => {
+const gitPullTask = async({ selectedScaffoldFolder }) => {
     process.chdir(selectedScaffoldFolder);
     const gitClean = await checkGitClean();
     if (!gitClean) {
@@ -60,7 +60,7 @@ const gitPullTask = async ({ selectedScaffoldFolder }) => {
     process.chdir(cwd);
 };
 
-const npmInstallTask = async ({ selectedScaffoldFolder }) => {
+const npmInstallTask = async({ selectedScaffoldFolder }) => {
     process.chdir(selectedScaffoldFolder);
     const yarnLockExists = await fileExists(path.join(selectedScaffoldFolder, 'yarn.lock'));
     if (yarnLockExists) {
@@ -71,7 +71,7 @@ const npmInstallTask = async ({ selectedScaffoldFolder }) => {
     process.chdir(cwd);
 };
 
-const prepareForCopyProjectFiles = async (ctx) => {
+const prepareForCopyProjectFiles = async(ctx) => {
     const { selectedScaffoldFolder } = ctx;
     const copyInfo = {
         project: {
@@ -79,15 +79,17 @@ const prepareForCopyProjectFiles = async (ctx) => {
         },
         scaffold: {
             folder: selectedScaffoldFolder,
-        }
+        },
     };
     const copyFiles = getCopyFiles(copyInfo);
     const files = await fse.readdir(selectedScaffoldFolder);
-    const excludeGitFiles = files.filter((file) => file !== GIT_FOLDER && file !== MODULES_FOLDER);
+    const excludeGitFiles = files.filter((file) => {
+        return file !== GIT_FOLDER && file !== MODULES_FOLDER;
+    });
     copyFiles(excludeGitFiles);
 };
 
-const prepareForScaffoldGT = async (ctx) => {
+const prepareForScaffoldGT = async(ctx) => {
     const { selectedScaffoldName, selectedScaffoldFolder, projectGTFilePath } = ctx;
 
     const projectGT = require(projectGTFilePath); // eslint-disable-line global-require, import/no-dynamic-require
@@ -127,11 +129,11 @@ const prepareForScaffoldGT = async (ctx) => {
     ctx.GTInfo = GTInfo; // eslint-disable-line no-param-reassign
 };
 
-const runScaffoldGT = async ({ projectGT, GTInfo }) => {
+const runScaffoldGT = async({ projectGT, GTInfo }) => {
     return await projectGT.init(GTInfo);
 };
 
-const updateStat = async ({ selectedScaffoldName }) => {
+const updateStat = async({ selectedScaffoldName }) => {
     await updateScaffoldStat(selectedScaffoldName);
 };
 
@@ -140,7 +142,7 @@ let projectGTFileExists = false;
 export const command = 'init';
 export const describe = 'Choose a scaffold to init your new project';
 export const builder = {};
-export const handler = async () => {
+export const handler = async() => {
     const userConfig = configManager.read();
     const scaffoldConfig = userConfig.scaffold;
     const scaffoldNameList = configManager.readScaffoldListByStatOrder();
@@ -164,7 +166,7 @@ export const handler = async () => {
         {
             title: 'clone scaffold',
             task: gitCloneTask,
-            skip: async () => {
+            skip: async() => {
                 const selectedScaffoldFolderExists = await directoryExists(selectedScaffoldFolder);
                 if (selectedScaffoldFolderExists) {
                     return 'scaffold exists';
