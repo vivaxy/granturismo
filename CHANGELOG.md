@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.8.0"></a>
+# [1.8.0](https://github.com/vivaxy/granturismo/compare/v1.7.1...v1.8.0) (2017-06-12)
+
+
+### Bug Fixes
+
+* :bug:fix eslint error ([b66c9ed](https://github.com/vivaxy/granturismo/commit/b66c9ed))
+
+
+### Features
+
+* :sparkles:add feature only copying project files when cannot find gt.js in scaffold project ([a59bc99](https://github.com/vivaxy/granturismo/commit/a59bc99))
+
+
+
 <a name="1.7.1"></a>
 ## [1.7.1](https://github.com/vivaxy/granturismo/compare/v1.7.0...v1.7.1) (2017-05-27)
 
