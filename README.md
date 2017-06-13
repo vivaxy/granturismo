@@ -6,7 +6,7 @@
 [![NPM Version][npm-version-image]][npm-url]
 [![NPM Downloads][npm-downloads-image]][npm-url]
 [![MIT License][license-image]][license-url]
-[![Standard Version][standard-version-image]][standard-version-url]
+[![Conventional Commits][conventional-commits-image]][conventional-commits-url]
 [![Codecov][codecov-image]][codecov-url]
 
 Generator Tool
@@ -212,7 +212,7 @@ make sure you have submitted your changes
 [npm-downloads-image]: https://img.shields.io/npm/dt/granturismo.svg?style=flat-square
 [license-image]: https://img.shields.io/npm/l/granturismo.svg?style=flat-square
 [license-url]: LICENSE
-[standard-version-image]: https://img.shields.io/badge/release-standard%20version-brightgreen.svg?style=flat-square
-[standard-version-url]: https://github.com/conventional-changelog/standard-version
+[conventional-commits-image]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
+[conventional-commits-url]: https://conventionalcommits.org
 [codecov-image]: https://img.shields.io/codecov/c/github/vivaxy/granturismo.svg?style=flat-square
 [codecov-url]: https://codecov.io/gh/vivaxy/granturismo
