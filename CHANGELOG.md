@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.9.0"></a>
+# [1.9.0](https://github.com/vivaxy/granturismo/compare/v1.8.0...v1.9.0) (2017-06-13)
+
+
+### Features
+
+* **bin:** :sparkles:Show help when command not met ([78b0a1c](https://github.com/vivaxy/granturismo/commit/78b0a1c))
+
+
+
 <a name="1.8.0"></a>
 # [1.8.0](https://github.com/vivaxy/granturismo/compare/v1.7.1...v1.8.0) (2017-06-12)
 
