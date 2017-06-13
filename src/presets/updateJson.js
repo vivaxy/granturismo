@@ -20,6 +20,6 @@ export default (options) => {
         const distFilename = path.join(distFolder, filename);
         const sourceData = await fse.readJson(sourceFilename);
         const distData = filter(sourceData);
-        await fse.outputJson(distFilename, distData);
+        await fse.outputFile(distFilename, JSON.stringify(distData, null, 2));
     };
 };

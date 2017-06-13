@@ -15,6 +15,6 @@ export default (options) => {
         const distFolder = project.folder;
         const distFilename = path.join(distFolder, filename);
 
-        await fse.outputJson(distFilename, data);
+        await fse.outputFile(distFilename, JSON.stringify(data, null, 2));
     };
 };

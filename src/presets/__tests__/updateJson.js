@@ -14,15 +14,25 @@ test.afterEach.always('clear project folder', async() => {
     await fse.remove(options.project.folder);
 });
 
-test('should create a new `package.json` file', async(t) => {
+test('should update a new `package.json` file with appropriate format', async(t) => {
+    const newJSONAttributes = {
+        newAttribute: 'newValue',
+        version: '1.0.0',
+    };
     const updateJson = createUpdateJson(options);
     const filename = 'package.json';
     const originalJSON = await fse.readJson(path.join(options.scaffold.folder, filename));
     await updateJson(filename, (json) => {
         return {
             ...json,
+            ...newJSONAttributes,
         };
     });
-    const newJSON = await fse.readJson(path.join(options.project.folder, filename));
-    t.deepEqual(originalJSON, newJSON);
+    const newJSONText = await fse.readFile(path.join(options.project.folder, filename), 'utf8');
+    const newJSON = JSON.parse(newJSONText);
+    t.deepEqual({
+        ...originalJSON,
+        ...newJSONAttributes,
+    }, newJSON);
+    t.is(newJSONText, JSON.stringify(newJSON, null, 2));
 });
