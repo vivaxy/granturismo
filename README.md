@@ -212,7 +212,7 @@ make sure you have submitted your changes
 [npm-downloads-image]: https://img.shields.io/npm/dt/granturismo.svg?style=flat-square
 [license-image]: https://img.shields.io/npm/l/granturismo.svg?style=flat-square
 [license-url]: LICENSE
-[conventional-commits-image]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
+[conventional-commits-image]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=flat-square
 [conventional-commits-url]: https://conventionalcommits.org
 [codecov-image]: https://img.shields.io/codecov/c/github/vivaxy/granturismo.svg?style=flat-square
 [codecov-url]: https://codecov.io/gh/vivaxy/granturismo
