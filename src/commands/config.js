@@ -85,7 +85,7 @@ const doAction = async(argv) => {
 };
 
 export const command = 'config <command> [name] [repo]';
-export const describe = 'Show or edit config';
+export const describe = 'Show or edit configs';
 export const builder = {};
 export const handler = async(argv) => {
     const action = argv.command;

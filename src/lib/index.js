@@ -13,6 +13,7 @@ import ensureConfig from './ensureConfig';
 const configureYargs = () => {
     return yargs
         .commandDir('../commands')
+        .demandCommand()
         .help()
         .version()
         .argv._;

@@ -29,7 +29,7 @@
     "inquirer": "^1.2.3",
     "listr": "^0.8.0",
     "update-notifier": "^2.1.0",
-    "yargs": "^6.4.0"
+    "yargs": "^8.0.2"
   },
   "devDependencies": {
     "ava": "^0.18.2",
