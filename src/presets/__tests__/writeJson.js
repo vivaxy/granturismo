@@ -20,7 +20,7 @@ test('should write a new `package.json` file with appropriate format', async(t) 
         version: '1.0.0',
     };
     const writeJson = createWriteJson(options);
-    const filename = 'package-for-write-json.json';
+    const filename = 'package.json';
     await writeJson(filename, json);
     const newJSONText = await fse.readFile(path.join(options.project.folder, filename), 'utf8');
     t.is(newJSONText, JSON.stringify(json, null, 2));

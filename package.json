@@ -65,6 +65,7 @@
       "babel-register"
     ],
     "babel": "inherit",
+    "concurrency": 1,
     "verbose": true
   }
 }
