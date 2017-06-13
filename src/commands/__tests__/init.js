@@ -4,7 +4,7 @@
  */
 
 import test from 'ava';
-import * as init from '../../src/commands/init';
+import * as init from '../init';
 
 test('config should has correct exports', (t) => {
     t.true(typeof init.command === 'string');

@@ -54,10 +54,11 @@
   },
   "ava": {
     "files": [
-      "test/**/*.js"
+      "src/**/__tests__/**/*.js"
     ],
     "source": [
-      "src/**/*.js"
+      "src/**/*.js",
+      "!src/**/__tests__/**/*.js"
     ],
     "require": [
       "babel-polyfill",

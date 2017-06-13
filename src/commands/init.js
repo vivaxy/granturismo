@@ -240,6 +240,6 @@ export const handler = async() => {
             await listrContext.projectGT.after(listrContext.GTInfo);
         }
     } catch (ex) {
-        console.log(ex);
+        console.log(ex); // eslint-disable-line no-console
     }
 };

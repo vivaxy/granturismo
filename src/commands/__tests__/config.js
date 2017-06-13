@@ -4,7 +4,7 @@
  */
 
 import test from 'ava';
-import * as config from '../../src/commands/config';
+import * as config from '../config';
 
 test('config should has correct exports', (t) => {
     t.true(typeof config.command === 'string');
