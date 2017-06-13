@@ -50,6 +50,8 @@ Make sure you have installed nodejs
 
 Implement `scripts/gt.js`, adding project info into user config.
 
+If `scripts/gt.js`, all files will be copied by default.
+
 See [gt-react-scaffold](https://github.com/vivaxy/gt-react-scaffold/blob/master/scripts/gt.js) and [gt-front-end-scaffold](https://github.com/vivaxy/gt-front-end-scaffold/blob/master/scripts/gt.js) for examples.
 
 ### gt.js
