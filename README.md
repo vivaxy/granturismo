@@ -193,11 +193,9 @@ Same as `copyFiles`, but remove files in project folder
 
 [Change Log](CHANGELOG.md)
 
-## Contribute
+## Contributing
 
-make sure you have submitted your changes
-
-`npm run release`
+[Contributing](CONTRIBUTING.md)
 
 ## Prior Art
 
