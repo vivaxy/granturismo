@@ -26,6 +26,7 @@
     "columnify": "^1.5.4",
     "execa": "^0.5.0",
     "fs-extra": "^3.0.1",
+    "git-user-name": "^1.2.0",
     "inquirer": "^1.2.3",
     "listr": "^0.8.0",
     "update-notifier": "^2.1.0",

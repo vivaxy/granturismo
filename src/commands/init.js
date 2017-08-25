@@ -8,6 +8,7 @@ import execa from 'execa';
 import Listr from 'listr';
 import inquirer from 'inquirer';
 import fse from 'fs-extra';
+import gitUsername from 'git-user-name';
 
 import fileExists from '../file/fileExists';
 import directoryExists from '../file/directoryExists';
@@ -100,6 +101,7 @@ const prepareForScaffoldGT = async(ctx) => {
         const repositoryURL = await getGitRemoteURL();
         projectGit = {
             repositoryURL,
+            username: gitUsername(),
         };
     }
 

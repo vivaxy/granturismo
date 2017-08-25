@@ -95,6 +95,7 @@ export const after = async(options) => {
         name: 'project-name', // same as project folder name
         git: {
             repositoryURL: 'git://git-url', // mainly used for package.json repository.url
+            username: 'vivaxy', // git configured username
         },
     },
     scaffold: {
@@ -188,6 +189,12 @@ Same as `updateFile`, but passing json object into `filter`
 `fileList` `Array[String]` is an array containing filename your want to copy
 
 Same as `copyFiles`, but remove files in project folder
+
+### How to test a scaffold project?
+
+- Checkout a new branch, update your `gt.js`
+- Use `gt config add test-scaffold-name git-repo#new-branch-name` to set a test registry.
+- `gt init` and select `test-scaffold-name` to run `gt.js` in your new branch to test.
 
 ## Change Log
 
