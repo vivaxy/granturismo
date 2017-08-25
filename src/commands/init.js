@@ -153,7 +153,7 @@ export const handler = async() => {
             {
                 type: 'confirm',
                 name: 'continue',
-                message: 'Current directory is not empty, files will be overridden. Continue',
+                message: 'Current directory is not empty, files will be overridden. Continue?',
                 default: true,
             },
         ]);
