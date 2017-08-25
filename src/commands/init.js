@@ -12,6 +12,7 @@ import gitUsername from 'git-user-name';
 
 import fileExists from '../file/fileExists';
 import directoryExists from '../file/directoryExists';
+import isDirectoryEmpty from '../file/isDirectoryEmpty';
 import * as configManager from '../lib/configManager';
 import updateScaffoldStat from '../lib/updateScaffoldStat';
 import checkGitRepository from '../git/checkGitRepository';
@@ -145,6 +146,22 @@ export const command = 'init';
 export const describe = 'Choose a scaffold to init your new project';
 export const builder = {};
 export const handler = async() => {
+    // check dir empty?
+    const isCurrentDirectoryEmpty = await isDirectoryEmpty(cwd, ['.git']);
+    if (!isCurrentDirectoryEmpty) {
+        const continueResult = await inquirer.prompt([
+            {
+                type: 'confirm',
+                name: 'continue',
+                message: 'Current directory is not empty, files will be overridden. Continue',
+                default: true,
+            },
+        ]);
+        if (!continueResult.continue) {
+            return;
+        }
+    }
+
     const userConfig = configManager.read();
     const scaffoldConfig = userConfig.scaffold;
     const scaffoldNameList = configManager.readScaffoldListByStatOrder();
@@ -153,7 +170,7 @@ export const handler = async() => {
         {
             type: 'list',
             name: 'scaffold',
-            message: 'choose scaffold...',
+            message: 'Choose a scaffold...',
             choices: scaffoldNameList,
         },
     ]);
@@ -166,7 +183,7 @@ export const handler = async() => {
 
     const gitTasks = [
         {
-            title: 'clone scaffold',
+            title: 'Clone scaffold.',
             task: gitCloneTask,
             skip: async() => {
                 const selectedScaffoldFolderExists = await directoryExists(selectedScaffoldFolder);
@@ -177,7 +194,7 @@ export const handler = async() => {
             },
         },
         {
-            title: 'pull scaffold',
+            title: 'Pull scaffold.',
             task: gitPullTask,
         },
     ];
@@ -186,7 +203,7 @@ export const handler = async() => {
 
     const postTasks = [
         {
-            title: 'finish up',
+            title: 'Finishing.',
             task: updateStat,
         },
     ];
@@ -206,20 +223,23 @@ export const handler = async() => {
         projectGTFileExists = await fileExists(projectGTFilePath);
 
         if (projectGTFileExists) {
-            preTasks.push({
-                title: 'install scaffold npm packages',
-                task: npmInstallTask,
-            }, {
-                title: 'prepare for scaffold GT',
-                task: prepareForScaffoldGT,
-            });
+            preTasks.push(
+                {
+                    title: 'Install scaffold npm packages.',
+                    task: npmInstallTask,
+                },
+                {
+                    title: 'Prepare for scaffold GT.',
+                    task: prepareForScaffoldGT,
+                },
+            );
             postTasks.unshift({
-                title: 'run scaffold GT',
+                title: 'Run scaffold GT.',
                 task: runScaffoldGT,
             });
         } else {
             preTasks.push({
-                title: 'prepare for copy project files',
+                title: 'Prepare for copy project files.',
                 task: prepareForCopyProjectFiles,
             });
         }
