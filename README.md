@@ -23,6 +23,8 @@ If you want to use a scaffold, the scaffold should be adapted to gt, but it is m
 
 - [vivaxy/gt-react-scaffold](https://github.com/vivaxy/gt-react-scaffold) webpack, babel, react, redux, router...
 - [vivaxy/gt-front-end-scaffold](https://github.com/vivaxy/gt-front-end-scaffold) webpack, babel, eslint...
+- [vivaxy/gt-node-server](https://github.com/vivaxy/gt-node-server) nodejs server
+- [vivaxy/gt-npm-package](https://github.com/vivaxy/gt-npm-package) npm package
 
 ## Installation
 
@@ -52,7 +54,7 @@ Implement `scripts/gt.js`, adding project info into user config.
 
 If `scripts/gt.js`, all files will be copied by default.
 
-See [gt-react-scaffold](https://github.com/vivaxy/gt-react-scaffold/blob/master/scripts/gt.js) and [gt-front-end-scaffold](https://github.com/vivaxy/gt-front-end-scaffold/blob/master/scripts/gt.js) for examples.
+See [Scaffolds](#Scaffolds) for examples.
 
 ### gt.js
 
