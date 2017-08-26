@@ -32,7 +32,7 @@ Make sure your git version >= 2.7.0
 
 Make sure you have installed nodejs
 
-`sudo npm i -g granturismo`
+`npm i -g granturismo`
 
 ## Usage
 
@@ -54,7 +54,7 @@ Implement `scripts/gt.js`, adding project info into user config.
 
 If `scripts/gt.js`, all files will be copied by default.
 
-See [Scaffolds](#Scaffolds) for examples.
+See [Scaffolds](#scaffolds) for examples.
 
 ### gt.js
 
