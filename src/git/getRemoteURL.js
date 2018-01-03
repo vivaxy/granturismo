@@ -8,5 +8,8 @@ import getGitRemote from './getRemote';
 
 export default async() => {
     const remote = await getGitRemote();
-    return await getInfoFromShell('git', ['remote', 'get-url', remote]);
+    if (remote) {
+        return await getInfoFromShell('git', ['remote', 'get-url', remote]);
+    }
+    return undefined;
 };
