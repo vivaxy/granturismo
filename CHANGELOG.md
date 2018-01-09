@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.12.0"></a>
+# [1.12.0](https://github.com/vivaxy/granturismo/compare/v1.11.1...v1.12.0) (2018-01-09)
+
+
+### Features
+
+* **scaffold:** :sparkles:Add scaffold project head commit hash ([07512c5](https://github.com/vivaxy/granturismo/commit/07512c5))
+
+
+
 <a name="1.11.1"></a>
 ## [1.11.1](https://github.com/vivaxy/granturismo/compare/v1.11.1-t01...v1.11.1) (2018-01-03)
 
