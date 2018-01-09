@@ -28,6 +28,7 @@ import getUpdateFiles from '../presets/updateFiles';
 import getWriteJson from '../presets/writeJson';
 import getUpdateJson from '../presets/updateJson';
 import getRemoveFiles from '../presets/removeFiles';
+import getAddScaffoldInfo from '../presets/addScaffoldInfo';
 
 const cwd = process.cwd();
 
@@ -77,12 +78,8 @@ const npmInstallTask = async({ selectedScaffoldFolder }) => {
 const prepareForCopyProjectFiles = async(ctx) => {
     const { selectedScaffoldFolder } = ctx;
     const copyInfo = {
-        project: {
-            folder: cwd,
-        },
-        scaffold: {
-            folder: selectedScaffoldFolder,
-        },
+        project: { folder: cwd },
+        scaffold: { folder: selectedScaffoldFolder },
     };
     const copyFiles = getCopyFiles(copyInfo);
     const files = await fse.readdir(selectedScaffoldFolder);
@@ -101,10 +98,7 @@ const prepareForScaffoldGT = async(ctx) => {
     const isGitRepository = await checkGitRepository();
     if (isGitRepository) {
         const repositoryURL = await getGitRemoteURL();
-        projectGit = {
-            repositoryURL,
-            username: gitUsername(),
-        };
+        projectGit = { repositoryURL, username: gitUsername() };
     }
 
     process.chdir(selectedScaffoldFolder);
@@ -112,18 +106,8 @@ const prepareForScaffoldGT = async(ctx) => {
     process.chdir(cwd);
 
     const GTInfo = {
-        project: {
-            folder: cwd,
-            name: cwd.split(path.sep).pop(),
-            git: projectGit,
-        },
-        scaffold: {
-            folder: selectedScaffoldFolder,
-            name: selectedScaffoldName,
-            git: {
-                headHash,
-            },
-        },
+        project: { folder: cwd, name: cwd.split(path.sep).pop(), git: projectGit },
+        scaffold: { folder: selectedScaffoldFolder, name: selectedScaffoldName, git: { headHash } },
     };
 
     GTInfo.presets = {
@@ -134,6 +118,7 @@ const prepareForScaffoldGT = async(ctx) => {
         updateJson: getUpdateJson(GTInfo),
         removeFiles: getRemoveFiles(GTInfo),
         updateFiles: getUpdateFiles(GTInfo),
+        addScaffoldInfo: getAddScaffoldInfo(GTInfo),
     };
 
     ctx.projectGT = projectGT; // eslint-disable-line no-param-reassign
@@ -201,29 +186,15 @@ export const handler = async() => {
                 return undefined;
             },
         },
-        {
-            title: 'Pull scaffold.',
-            task: gitPullTask,
-        },
+        { title: 'Pull scaffold.', task: gitPullTask },
     ];
 
     const preTasks = [];
-
-    const postTasks = [
-        {
-            title: 'Finishing.',
-            task: updateStat,
-        },
-    ];
+    const postTasks = [{ title: 'Finishing.', task: updateStat }];
 
     const gitListr = new Listr(gitTasks);
 
-    let listrContext = {
-        selectedScaffoldName,
-        selectedScaffoldRepo,
-        selectedScaffoldFolder,
-        projectGTFilePath,
-    };
+    let listrContext = { selectedScaffoldName, selectedScaffoldRepo, selectedScaffoldFolder, projectGTFilePath };
 
     try {
         listrContext = await gitListr.run(listrContext);
@@ -232,24 +203,12 @@ export const handler = async() => {
 
         if (projectGTFileExists) {
             preTasks.push(
-                {
-                    title: 'Install scaffold npm packages.',
-                    task: npmInstallTask,
-                },
-                {
-                    title: 'Prepare for scaffold GT.',
-                    task: prepareForScaffoldGT,
-                },
+                { title: 'Install scaffold npm packages.', task: npmInstallTask },
+                { title: 'Prepare for scaffold GT.', task: prepareForScaffoldGT },
             );
-            postTasks.unshift({
-                title: 'Run scaffold GT.',
-                task: runScaffoldGT,
-            });
+            postTasks.unshift({ title: 'Run scaffold GT.', task: runScaffoldGT });
         } else {
-            preTasks.push({
-                title: 'Prepare for copy project files.',
-                task: prepareForCopyProjectFiles,
-            });
+            preTasks.push({ title: 'Prepare for copy project files.', task: prepareForCopyProjectFiles });
         }
 
         const preListr = new Listr(preTasks);

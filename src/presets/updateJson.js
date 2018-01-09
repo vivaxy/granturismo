@@ -6,12 +6,7 @@
 import path from 'path';
 import fse from 'fs-extra';
 
-export default (options) => {
-    const {
-        project,
-        scaffold,
-    } = options;
-
+export default ({ project, scaffold }) => {
     return async(filename, filter) => {
         const sourceFolder = scaffold.folder;
         const distFolder = project.folder;

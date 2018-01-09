@@ -1,4 +1,4 @@
-# granturismo
+# Granturismo
 
 ![GT](./assets/images/gt.png)
 
@@ -9,7 +9,7 @@
 [![Conventional Commits][conventional-commits-image]][conventional-commits-url]
 [![Codecov][codecov-image]][codecov-url]
 
-Generator Tool
+Generator Tool.
 
 Workflow tool for scaffolding projects.
 
@@ -56,7 +56,7 @@ If `scripts/gt.js`, all files will be copied by default.
 
 See [Scaffolds](#scaffolds) for examples.
 
-### gt.js
+### `gt.js`
 
 If you want to use es6 in `gt.js`, please use `babel-register` or babel-built js.
 
@@ -114,6 +114,7 @@ export const after = async(options) => {
         writeJson: async() => {},
         updateJson: async() => {},
         removeFiles: async() => {},
+        addScaffoldInfo: async() => {},
     },
 }
 ```
@@ -133,20 +134,17 @@ export const after = async(options) => {
 }
 ```
 
-#### presets
+#### Presets
 
-##### copyFiles(fileList {Array[String]})
+##### `copyFiles(fileList)`
 
-`fileList` `Array[String]` is an array containing filename your want to copy
+- `fileList Array[String]` is an array containing filename your want to copy.
 
 eg.
 
 ```
 const copyFiles = async() => {
-
-    const {
-        presets,
-    } = options;
+    const { presets } = options;
 
     const files = [
         `docs`,
@@ -163,41 +161,65 @@ const copyFiles = async() => {
 };
 ```
 
-##### writeFile(file {String}, content {String})
+##### `writeFile(file, content)`
 
-Write string into file under project folder
+- `file {String}`
+- `content {String}`
 
-##### updateFile(file {String}, filter {Function})
+Write string into file under project folder.
 
-`filter {Function}` `filter(input {String}) => output {String}`
+##### `updateFile(file, filter)`
 
-Read file from scaffold, passing into `filter`, write filter result into file under project folder
+- `file {String}`
+- `filter {Function} filter(input) => output`
+    - `input {String}`
+    - `output {String}`
 
-##### updateFiles(files {Array[String]}, filter {Function})
+Read file from scaffold, passing into `filter`, write filter result into file under project folder.
 
-`filter {Function}` `filter(input {String}) => output {String}`
+##### `updateFiles(files, filter)`
 
-Read file from scaffold, passing into `filter`, write filter result into file under project folder
+- `files {Array[String]}`
+- `filter {Function} filter(input) => output`
+    - `input {String}`
+    - `output {String}`
 
-##### writeJson(file {String}, json {Object})
+Read file from scaffold, passing into `filter`, write filter result into file under project folder.
 
-Same as `writeFile`, but passing json object into second parameter
+##### `writeJson(file, json)`
 
-##### updateJson(file {String}, filter {Function})
+- `file {String}`
+- `json {Object}`
 
-`filter {Function}` `filter(input {Object}) => output {Object}`
+Same as `writeFile`, but passing json object into second parameter.
 
-Same as `updateFile`, but passing json object into `filter`
+##### `updateJson(file, filter)`
 
-##### removeFiles(fileList {Array[String]})
+- `file {String}`
+- `filter {Function} filter(input) => output`
+    - `input {Object}`
+    - `output {Object}`
 
-`fileList` `Array[String]` is an array containing filename your want to copy
+Same as `updateFile`, but passing json object into `filter`.
 
-Same as `copyFiles`, but remove files in project folder
+##### `removeFiles(fileList)`
+
+- `fileList Array[String]` is an array containing filename your want to copy.
+
+Same as `copyFiles`, but remove files in project folder.
+
+##### `addScaffoldInfo({ scaffoldCommitHash, scaffoldVersion })`
+
+- `scaffoldCommitHash {String}` default: `'scaffoldCommitHash'`
+- `scaffoldVersion {String}` default: `'scaffoldVersion'`
+
+Update the project `package.json` file, add `scaffoldCommitHash` and `scaffoldVersion`.
+Use `scaffoldCommitHash` and `scaffoldVersion` as `package.json` key.
+If `scaffoldCommitHash` or `scaffoldVersion` is falsy`, it will not add this key.
 
 ### How to test a scaffold project?
 
-- Checkout a new branch, update your `gt.js`
+- Checkout a new branch, update your `gt.js`.
 - Use `gt config add test-scaffold-name git-repo#new-branch-name` to set a test registry.
 - `gt init` and select `test-scaffold-name` to run `gt.js` in your new branch to test.
 

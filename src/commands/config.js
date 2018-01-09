@@ -33,10 +33,7 @@ const add = async(argv) => {
                 stat = userConfig.scaffold[scaffoldName].stat;
             }
             const newConfig = Object.assign({}, userConfig);
-            newConfig.scaffold[scaffoldName] = {
-                repo,
-                stat,
-            };
+            newConfig.scaffold[scaffoldName] = { repo, stat };
             return newConfig;
         });
     } else {
@@ -58,11 +55,7 @@ const list = () => {
     const userConfig = configManager.read().scaffold;
     const scaffoldList = configManager.readScaffoldListByStatOrder();
     const data = scaffoldList.map((scaffold) => {
-        return {
-            stat: userConfig[scaffold].stat,
-            name: scaffold,
-            repo: userConfig[scaffold].repo,
-        };
+        return { stat: userConfig[scaffold].stat, name: scaffold, repo: userConfig[scaffold].repo };
     });
     console.log(columnify(data)); // eslint-disable-line no-console
 };

@@ -6,11 +6,7 @@
 import path from 'path';
 import fse from 'fs-extra';
 
-export default (options) => {
-    const {
-        project,
-    } = options;
-
+export default ({ project }) => {
     return async(filename, data) => {
         const distFolder = project.folder;
         const distFilename = path.join(distFolder, filename);

@@ -5,8 +5,8 @@
 
 import getUpdateFile from './updateFile';
 
-export default (options) => {
-    const updateFile = getUpdateFile(options);
+export default ({ project, scaffold }) => {
+    const updateFile = getUpdateFile({ project, scaffold });
 
     return async(files, filter) => {
         await Promise.all(files.map((file) => {
