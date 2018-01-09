@@ -1,6 +1,6 @@
 {
   "name": "granturismo",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "description": "generator tool",
   "bin": {
     "gt": "./index.js"
