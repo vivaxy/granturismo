@@ -16,7 +16,7 @@ export const read = () => {
 };
 
 export const write = async(json) => {
-    return await fse.outputJson(userConfigFile, json);
+    return await fse.outputJson(userConfigFile, json, { spaces: 2 });
 };
 
 export const exist = async() => {
