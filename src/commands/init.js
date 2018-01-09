@@ -107,6 +107,10 @@ const prepareForScaffoldGT = async(ctx) => {
         };
     }
 
+    process.chdir(selectedScaffoldFolder);
+    const headHash = await getCommitHash();
+    process.chdir(cwd);
+
     const GTInfo = {
         project: {
             folder: cwd,
@@ -117,7 +121,7 @@ const prepareForScaffoldGT = async(ctx) => {
             folder: selectedScaffoldFolder,
             name: selectedScaffoldName,
             git: {
-                headHash: await getCommitHash(),
+                headHash,
             },
         },
     };
