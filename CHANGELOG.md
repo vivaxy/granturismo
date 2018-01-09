@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.13.0"></a>
+# [1.13.0](https://github.com/vivaxy/granturismo/compare/v1.12.2...v1.13.0) (2018-01-09)
+
+
+### Features
+
+* **init:** :sparkles:Add `addScaffoldInfo` preset ([4c9f2b0](https://github.com/vivaxy/granturismo/commit/4c9f2b0))
+
+
+
 <a name="1.12.2"></a>
 ## [1.12.2](https://github.com/vivaxy/granturismo/compare/v1.12.1...v1.12.2) (2018-01-09)
 
