@@ -18,6 +18,7 @@ import updateScaffoldStat from '../lib/updateScaffoldStat';
 import checkGitRepository from '../git/checkGitRepository';
 import checkGitClean from '../git/getClean';
 import getGitRemoteURL from '../git/getRemoteURL';
+import getCommitHash from '../git/getCommitHash';
 import { GT_HOME, MODULES_FOLDER, GIT_FOLDER, PROJECT_GT_FILE } from '../config';
 
 import getCopyFiles from '../presets/copyFiles';
@@ -115,6 +116,9 @@ const prepareForScaffoldGT = async(ctx) => {
         scaffold: {
             folder: selectedScaffoldFolder,
             name: selectedScaffoldName,
+            git: {
+                headHash: await getCommitHash(),
+            },
         },
     };
 

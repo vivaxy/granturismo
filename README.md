@@ -103,6 +103,9 @@ export const after = async(options) => {
     scaffold: {
         folder: '/absolute/path/to/scaffold/folder', // mostly ~/.gt/scaffold-name
         name: 'scaffold-name',
+        git: {
+            headHash: '23c5742ac306e561554d1cfa56b1618d30d16157',
+        },
     },
     presets: {
         copyFiles: async() => {},
