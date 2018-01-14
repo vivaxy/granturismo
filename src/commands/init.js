@@ -229,6 +229,9 @@ export const handler = async() => {
             await listrContext.projectGT.after(listrContext.GTInfo);
         }
     } catch (ex) {
-        console.log(ex); // eslint-disable-line no-console
+        if (ex.message.indexOf('spawn yarn ENOENT')) {
+            return console.error('Please install `yarn`. See [docs](https://yarnpkg.com/en/docs/install) for details.');
+        }
+        console.error(ex); // eslint-disable-line no-console
     }
 };
