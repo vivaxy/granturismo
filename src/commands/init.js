@@ -232,6 +232,6 @@ export const handler = async() => {
         if (ex.message.indexOf('spawn yarn ENOENT')) {
             return console.error('Please install `yarn`. See [docs](https://yarnpkg.com/en/docs/install) for details.');
         }
-        console.error(ex); // eslint-disable-line no-console
+        console.error(ex);
     }
 };
