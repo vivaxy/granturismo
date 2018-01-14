@@ -6,10 +6,8 @@
 import path from 'path';
 import fse from 'fs-extra';
 
-export default ({ project }) => {
+export default ({ project: { folder } }) => {
     return async(files) => {
-        const folder = project.folder;
-
         await Promise.all(files.map((file) => {
             return fse.remove(path.join(folder, file));
         }));

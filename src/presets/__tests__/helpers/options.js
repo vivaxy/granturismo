@@ -6,10 +6,6 @@
 import path from 'path';
 
 export default {
-    scaffold: {
-        folder: path.join(__dirname, '..', 'fixtures', 'scaffold'),
-    },
-    project: {
-        folder: path.join(__dirname, '..', 'fixtures', 'project'),
-    },
+    scaffold: { folder: path.join(__dirname, '..', 'fixtures', 'scaffold') },
+    project: { folder: path.join(__dirname, '..', 'fixtures', 'project') },
 };
