@@ -140,6 +140,7 @@ const getFriendlyInformation = (ex) => {
         return `Please install \`yarn\`.
 See [docs](https://yarnpkg.com/en/docs/install) for details.`;
     }
+    return 'Please file an issue on [Github](https://github.com/vivaxy/granturismo/issues) with error details.';
 };
 
 let projectGTFileExists = false;
@@ -238,6 +239,6 @@ export const handler = async() => {
         }
     } catch (ex) {
         console.log(ex);
-        console.log(`${chalk.blue(figures('ℹ'))} ${getFriendlyInformation(ex)}`);
+        console.log(`\n${chalk.blue(figures('ℹ'))} ${getFriendlyInformation(ex)}`);
     }
 };
