@@ -229,9 +229,11 @@ export const handler = async() => {
             await listrContext.projectGT.after(listrContext.GTInfo);
         }
     } catch (ex) {
-        if (ex.message.indexOf('spawn yarn ENOENT')) {
-            return console.error('Please install `yarn`. See [docs](https://yarnpkg.com/en/docs/install) for details.');
+        if (ex.message === 'spawn yarn ENOENT') {
+            console.error(`Please install \`yarn\`.
+See [docs](https://yarnpkg.com/en/docs/install) for details.`);
+            return console.log(ex);
         }
-        console.error(ex);
+        console.log(ex);
     }
 };
