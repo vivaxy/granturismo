@@ -43,14 +43,18 @@
     "cross-env": "^3.2.4",
     "glob": "^7.1.1",
     "glob-promise": "^3.1.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.0",
     "nyc": "^10.1.2",
+    "prettier": "^1.11.1",
     "standard-version": "^3.0.0"
   },
   "scripts": {
     "beta": "npm run test && npm run build && npm publish --tag beta",
     "release": "npm run test && npm run build && standard-version && git push --follow-tags && npm publish --registry=https://registry.npmjs.org/",
     "test": "cross-env NODE_ENV=test nyc ava && nyc report --reporter=html && nyc report --reporter=lcov > coverage.lcov",
-    "build": "cross-env NODE_ENV=production node ./scripts/build.js"
+    "build": "cross-env NODE_ENV=production node ./scripts/build.js",
+    "precommit": "lint-staged"
   },
   "ava": {
     "files": [
@@ -67,5 +71,11 @@
     "babel": "inherit",
     "concurrency": 1,
     "verbose": true
+  },
+  "lint-staged": {
+    "**/**.{js,json,pcss,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
