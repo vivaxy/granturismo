@@ -7,17 +7,17 @@ import chalk from 'chalk';
 import logSymbols from 'log-symbols';
 
 export const native = (message) => {
-    console.log(message); // eslint-disable-line no-console
+    console.log(message);
 };
 
 export const info = (message) => {
-    console.log(chalk.blue(logSymbols.info), message); // eslint-disable-line no-console
+    console.log(chalk.blue(logSymbols.info), message);
 };
 
 export const success = (message) => {
-    console.log(chalk.green(logSymbols.success), message); // eslint-disable-line no-console
+    console.log(chalk.green(logSymbols.success), message);
 };
 
 export const error = (message) => {
-    console.log(chalk.red(logSymbols.error), message); // eslint-disable-line no-console
+    console.log(chalk.red(logSymbols.error), message);
 };

@@ -26,7 +26,7 @@ export const handler = async({ name: scaffoldName }) => {
             logger.info(`Scaffold \`${scaffoldName}\` not exists.`);
             return userConfig;
         }
-        repo = newConfig.scaffold[scaffoldName].repo; // eslint-disable-line prefer-destructuring
+        repo = newConfig.scaffold[scaffoldName].repo;
         delete newConfig.scaffold[scaffoldName];
         await fse.remove(path.join(GT_HOME, scaffoldName));
         logger.success(`Scaffold \`${scaffoldName}\` at \`${repo}\` removed.`);

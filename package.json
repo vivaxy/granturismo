@@ -41,7 +41,6 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.18.0",
     "cross-env": "^3.2.4",
-    "eslint-config-vivaxy": "^0.3.0",
     "glob": "^7.1.1",
     "glob-promise": "^3.1.0",
     "nyc": "^10.1.2",
@@ -50,9 +49,8 @@
   "scripts": {
     "beta": "npm run test && npm run build && npm publish --tag beta",
     "release": "npm run test && npm run build && standard-version && git push --follow-tags && npm publish --registry=https://registry.npmjs.org/",
-    "test": "npm run lint && cross-env NODE_ENV=test nyc ava && nyc report --reporter=html && nyc report --reporter=lcov > coverage.lcov",
-    "build": "cross-env NODE_ENV=production node ./scripts/build.js",
-    "lint": "eslint ./src"
+    "test": "cross-env NODE_ENV=test nyc ava && nyc report --reporter=html && nyc report --reporter=lcov > coverage.lcov",
+    "build": "cross-env NODE_ENV=production node ./scripts/build.js"
   },
   "ava": {
     "files": [
