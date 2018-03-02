@@ -15,5 +15,5 @@ export const handler = () => {
     const data = scaffoldList.map((scaffold) => {
         return { stat: userConfig[scaffold].stat, name: scaffold, repo: userConfig[scaffold].repo };
     });
-    console.log(columnify(data)); // eslint-disable-line no-console
+    console.log(columnify(data));
 };

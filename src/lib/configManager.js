@@ -12,7 +12,7 @@ import { GT_HOME, CONFIG_FILE_NAME } from '../config';
 const userConfigFile = path.join(GT_HOME, CONFIG_FILE_NAME);
 
 export const read = () => {
-    return require(userConfigFile); // eslint-disable-line global-require, import/no-dynamic-require
+    return require(userConfigFile);
 };
 
 export const write = async(json) => {

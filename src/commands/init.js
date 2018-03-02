@@ -93,7 +93,7 @@ const prepareForCopyProjectFiles = async(ctx) => {
 const prepareForScaffoldGT = async(ctx) => {
     const { selectedScaffoldName, selectedScaffoldFolder, projectGTFilePath } = ctx;
 
-    const projectGT = require(projectGTFilePath); // eslint-disable-line global-require, import/no-dynamic-require
+    const projectGT = require(projectGTFilePath);
     let projectGit = null;
 
     const isGitRepository = await checkGitRepository();
@@ -122,8 +122,8 @@ const prepareForScaffoldGT = async(ctx) => {
         addScaffoldInfo: getAddScaffoldInfo(GTInfo),
     };
 
-    ctx.projectGT = projectGT; // eslint-disable-line no-param-reassign
-    ctx.GTInfo = GTInfo; // eslint-disable-line no-param-reassign
+    ctx.projectGT = projectGT;
+    ctx.GTInfo = GTInfo;
 };
 
 const runScaffoldGT = async({ projectGT, GTInfo }) => {

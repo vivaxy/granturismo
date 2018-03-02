@@ -1,0 +1,7 @@
+CHANGELOG.md
+README.md
+package.json
+**/__test__/**/fixtures/**
+.nyc_output
+assets
+coverage
