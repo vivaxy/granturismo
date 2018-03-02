@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.14.0"></a>
+# [1.14.0](https://github.com/vivaxy/granturismo/compare/v1.13.4...v1.14.0) (2018-03-02)
+
+
+### Features
+
+* **help:** :sparkles:Improve help display ([a2dd809](https://github.com/vivaxy/granturismo/commit/a2dd809))
+
+
+
 <a name="1.13.4"></a>
 ## [1.13.4](https://github.com/vivaxy/granturismo/compare/v1.13.3...v1.13.4) (2018-01-14)
 
