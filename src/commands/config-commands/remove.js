@@ -18,8 +18,7 @@ export const builder = {
         type: 'string',
     },
 };
-export const handler = async(argv) => {
-    const scaffoldName = argv.name;
+export const handler = async({ name: scaffoldName }) => {
     let repo = null;
     await editConfig(async(userConfig) => {
         const newConfig = Object.assign({}, userConfig);
@@ -27,7 +26,7 @@ export const handler = async(argv) => {
             logger.info(`Scaffold \`${scaffoldName}\` not exists.`);
             return userConfig;
         }
-        repo = newConfig.scaffold[scaffoldName].repo;
+        repo = newConfig.scaffold[scaffoldName].repo; // eslint-disable-line prefer-destructuring
         delete newConfig.scaffold[scaffoldName];
         await fse.remove(path.join(GT_HOME, scaffoldName));
         logger.success(`Scaffold \`${scaffoldName}\` at \`${repo}\` removed.`);

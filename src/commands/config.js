@@ -5,6 +5,7 @@
 
 import yargs from 'yargs';
 
+export const command = 'config <command> ...';
 export const describe = 'Show or edit configs';
 export const builder = () => {
     return yargs.commandDir('./config-commands');

@@ -7,11 +7,10 @@ import path from 'path';
 import execa from 'execa';
 import Listr from 'listr';
 import fse from 'fs-extra';
-import chalk from 'chalk';
-import figures from 'figures';
 import inquirer from 'inquirer';
 import gitUsername from 'git-user-name';
 
+import * as logger from '../lib/logger';
 import fileExists from '../file/fileExists';
 import directoryExists from '../file/directoryExists';
 import isDirectoryEmpty from '../file/isDirectoryEmpty';
@@ -238,7 +237,8 @@ export const handler = async() => {
             await listrContext.projectGT.after(listrContext.GTInfo);
         }
     } catch (ex) {
-        console.log(ex);
-        console.log(`\n${chalk.blue(figures('ℹ'))} ${getFriendlyInformation(ex)}`);
+        logger.native(ex);
+        logger.native();
+        logger.error(getFriendlyInformation(ex));
     }
 };
