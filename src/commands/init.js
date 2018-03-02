@@ -6,8 +6,10 @@
 import path from 'path';
 import execa from 'execa';
 import Listr from 'listr';
-import inquirer from 'inquirer';
 import fse from 'fs-extra';
+import chalk from 'chalk';
+import figures from 'figures';
+import inquirer from 'inquirer';
 import gitUsername from 'git-user-name';
 
 import fileExists from '../file/fileExists';
@@ -133,6 +135,14 @@ const updateStat = async({ selectedScaffoldName }) => {
     await updateScaffoldStat(selectedScaffoldName);
 };
 
+const getFriendlyInformation = (ex) => {
+    if (ex.message === 'spawn yarn ENOENT') {
+        return `Please install \`yarn\`.
+See [docs](https://yarnpkg.com/en/docs/install) for details.`;
+    }
+    return 'Please file an issue on [Github](https://github.com/vivaxy/granturismo/issues) with error details.';
+};
+
 let projectGTFileExists = false;
 
 export const command = 'init';
@@ -183,7 +193,6 @@ export const handler = async() => {
                 if (selectedScaffoldFolderExists) {
                     return 'scaffold exists';
                 }
-                return undefined;
             },
         },
         { title: 'Pull scaffold.', task: gitPullTask },
@@ -229,6 +238,7 @@ export const handler = async() => {
             await listrContext.projectGT.after(listrContext.GTInfo);
         }
     } catch (ex) {
-        console.log(ex); // eslint-disable-line no-console
+        console.log(ex);
+        console.log(`\n${chalk.blue(figures('ℹ'))} ${getFriendlyInformation(ex)}`);
     }
 };

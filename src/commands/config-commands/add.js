@@ -19,15 +19,10 @@ export const builder = {
         type: 'string',
     },
 };
-export const handler = async(argv) => {
-    const scaffoldName = argv.name;
-    const repo = argv.repo;
+export const handler = async({ name: scaffoldName, repo }) => {
     if (repo) {
         await editConfig((userConfig) => {
-            let stat = 0;
-            if (userConfig.scaffold[scaffoldName]) {
-                stat = userConfig.scaffold[scaffoldName].stat;
-            }
+            const { stat = 0 } = userConfig.scaffold[scaffoldName] || {};
             const newConfig = Object.assign({}, userConfig);
             newConfig.scaffold[scaffoldName] = { repo, stat };
             return newConfig;

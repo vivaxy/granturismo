@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.13.4"></a>
+## [1.13.4](https://github.com/vivaxy/granturismo/compare/v1.13.3...v1.13.4) (2018-01-14)
+
+
+
+<a name="1.13.3"></a>
+## [1.13.3](https://github.com/vivaxy/granturismo/compare/v1.13.2...v1.13.3) (2018-01-14)
+
+
+
+<a name="1.13.2"></a>
+## [1.13.2](https://github.com/vivaxy/granturismo/compare/v1.13.1...v1.13.2) (2018-01-14)
+
+
+### Bug Fixes
+
+* **init:** :bug:Fix prompt for installation of `yarn` ([b283fb7](https://github.com/vivaxy/granturismo/commit/b283fb7))
+
+
+
+<a name="1.13.1"></a>
+## [1.13.1](https://github.com/vivaxy/granturismo/compare/v1.13.1-1...v1.13.1) (2018-01-14)
+
+
+
 <a name="1.13.0"></a>
 # [1.13.0](https://github.com/vivaxy/granturismo/compare/v1.12.2...v1.13.0) (2018-01-09)
 
