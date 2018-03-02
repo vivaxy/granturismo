@@ -33,3 +33,9 @@ export const readScaffoldListByStatOrder = () => {
     });
     return scaffoldNameList;
 };
+
+export const editConfig = async(filter) => {
+    const config = read();
+    const updatedUserConfig = await filter(config);
+    await write(updatedUserConfig);
+};
